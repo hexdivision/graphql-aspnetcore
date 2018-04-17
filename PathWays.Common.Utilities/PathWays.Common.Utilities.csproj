@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;DevServer</Configurations>
+  </PropertyGroup>
+
+  <Import Project="..\PathWays.Shared\ProjectBuildProperties.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="7.1.0" />
+  </ItemGroup>
+</Project>

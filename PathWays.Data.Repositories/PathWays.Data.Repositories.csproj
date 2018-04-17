@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Configurations>Debug;Release;DevServer</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PathWays.Data.Model\PathWays.Data.Model.csproj" />
+    <ProjectReference Include="..\PathWays.Common.Utilities\PathWays.Common.Utilities.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Amendment\AmendmentRepository.cs" />
+    <Compile Remove="Claim\ClaimDetailRepository.cs" />
+    <Compile Remove="Claim\ClaimRepository.cs" />
+    <Compile Remove="Claim\IClaimDetailRepository.cs" />
+    <Compile Remove="Claim\IClaimRepository.cs" />
+    <Compile Remove="DisputeStatus\DisputeStatusRepository.cs" />
+    <Compile Remove="ExcludeWord\ExcludeWordRepository.cs" />
+    <Compile Remove="ExcludeWord\IExcludeWordRepository.cs" />
+    <Compile Remove="User\DisputeUserRepository.cs" />
+  </ItemGroup>
+  <Import Project="..\PathWays.Shared\ProjectBuildProperties.targets" />
+
+</Project>
