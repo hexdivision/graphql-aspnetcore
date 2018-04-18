@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PathWays.Data.Model.Migrations
 {
-    public partial class IntitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace PathWays.Data.Model.Migrations
                     SystemSettingsId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(nullable: true),
-                    Type = table.Column<byte>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
