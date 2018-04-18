@@ -33,6 +33,12 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<SystemSettings> SystemSettings { get; set; }
 
+        public virtual DbSet<UserExploration> UserExplorations { get; set; }
+
+        public virtual DbSet<UserExplorationToken> UserExplorationTokens { get; set; }
+
+        public virtual DbSet<AccessCodeExcludeWord> AccessCodeExcludeWords { get; set; }
+
         #endregion
 
         #region Fluent API
@@ -61,6 +67,9 @@ namespace PathWays.Data.Model
         private void AddDefaultValues(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SystemUserRole>().Property(r => r.SessionDuration).HasDefaultValue(900);
+
+            modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
+            modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
         }
 
         private void ApplyIsDeletedFilter(ModelBuilder modelBuilder)
