@@ -16,8 +16,6 @@
     <Compile Remove="Claim\IClaimDetailRepository.cs" />
     <Compile Remove="Claim\IClaimRepository.cs" />
     <Compile Remove="DisputeStatus\DisputeStatusRepository.cs" />
-    <Compile Remove="ExcludeWord\ExcludeWordRepository.cs" />
-    <Compile Remove="ExcludeWord\IExcludeWordRepository.cs" />
     <Compile Remove="User\DisputeUserRepository.cs" />
   </ItemGroup>
   <Import Project="..\PathWays.Shared\ProjectBuildProperties.targets" />

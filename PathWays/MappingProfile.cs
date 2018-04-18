@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PathWays.Data.Model;
-using PathWays.Models;
+using PathWays.Types;
 
 namespace PathWays
 {

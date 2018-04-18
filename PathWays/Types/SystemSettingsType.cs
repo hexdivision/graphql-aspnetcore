@@ -2,7 +2,7 @@
 using GraphQL.Types;
 using PathWays.Data.Model;
 
-namespace PathWays.Models
+namespace PathWays.Types
 {
     public class SystemSettingsType : ObjectGraphType<SystemSettings>
     {
