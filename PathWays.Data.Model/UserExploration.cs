@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PathWays.Data.Model
@@ -26,5 +27,7 @@ namespace PathWays.Data.Model
         public DateTime CreatedDate { get; set; }
 
         public DateTime ModifiedDate { get; set; }
+
+        public virtual ICollection<UserExplorationToken> UserExplorationTokens { get; set; }
     }
 }

@@ -68,8 +68,8 @@ namespace PathWays.Data.Model
         {
             modelBuilder.Entity<SystemUserRole>().Property(r => r.SessionDuration).HasDefaultValue(900);
 
-            modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
-            modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
+            ////modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
+            ////modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
         }
 
         private void ApplyIsDeletedFilter(ModelBuilder modelBuilder)

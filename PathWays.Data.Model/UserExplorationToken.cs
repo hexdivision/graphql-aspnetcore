@@ -22,6 +22,8 @@ namespace PathWays.Data.Model
 
         public byte RoleId { get; set; }
 
+        public UserExploration UserExploration { get; set; }
+
         public int? ExplorationId { get; set; }
 
         public int? SystemUserId { get; set; }
