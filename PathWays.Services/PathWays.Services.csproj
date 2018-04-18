@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="SystemSettingsService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PathWays.Data.Repositories\PathWays.Data.Repositories.csproj" />
+    <ProjectReference Include="..\PathWays.Data.Model\PathWays.Data.Model.csproj" />
+  </ItemGroup>
+    <Import Project="..\PathWays.Shared\ProjectBuildProperties.targets" />
+
+</Project>

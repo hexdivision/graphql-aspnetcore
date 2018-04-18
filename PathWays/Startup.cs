@@ -12,7 +12,10 @@ using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
-using PathWays.Models;
+using PathWays.Mutations;
+using PathWays.Queries;
+using PathWays.Services.SystemSettingsService;
+using PathWays.Types;
 using PathWays.UserResolverService;
 
 namespace PathWays
@@ -35,19 +38,21 @@ namespace PathWays
 
             services.AddGraphQl(schema =>
             {
-                schema.SetQueryType<PathWaysQuery>();
-                schema.SetMutationType<PathWaysMutation>();
+                schema.SetQueryType<SystemSettingsQuery>();
+                schema.SetMutationType<SystemSettingsMutation>();
             });
 
             services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
-            services.AddScoped<PathWaysQuery>();
-            services.AddScoped<PathWaysMutation>();
+            services.AddScoped<SystemSettingsQuery>();
+            services.AddScoped<SystemSettingsMutation>();
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+            services.AddSingleton<ISystemSettingsService, SystemSettingsService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
-            services.AddScoped<ITokenRepository, TokenRepository>();
+
             services.AddScoped<SystemSettingsType>();
             services.AddScoped<SystemSettingsInputType>();
 

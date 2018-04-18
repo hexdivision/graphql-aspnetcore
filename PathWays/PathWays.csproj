@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="Models\" />
+    <Folder Include="Types\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Mutations\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PathWays.Core\PathWays.Core.csproj" />
     <ProjectReference Include="..\PathWays.Data.Model\PathWays.Data.Model.csproj" />
     <ProjectReference Include="..\PathWays.Data.Repositories\PathWays.Data.Repositories.csproj" />
+    <ProjectReference Include="..\PathWays.Services\PathWays.Services.csproj" />
   </ItemGroup>
   
   <ItemGroup>

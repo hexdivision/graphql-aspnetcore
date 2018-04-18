@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
 using GraphQL.Types;
 using PathWays.Data.Model;
-using PathWays.Data.Repositories.SystemSettings;
-using PathWays.Data.Repositories.UnitOfWork;
-using PathWays.Data.Repositories.User;
+using PathWays.Services.SystemSettingsService;
+using PathWays.Types;
 
-namespace PathWays.Models
+namespace PathWays.Mutations
 {
-    public class PathWaysMutation : ObjectGraphType
+    public class SystemSettingsMutation : ObjectGraphType
     {
-        public PathWaysMutation(ISystemSettingsRepository systemSettingsRepository, ISystemUserRepository systemUserRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public SystemSettingsMutation(ISystemSettingsService systemSettingsService, IMapper mapper)
         {
             Name = "Mutation";
 
@@ -25,8 +23,7 @@ namespace PathWays.Models
                     try
                     {
                         var setting = context.GetArgument<SystemSettings>("setting");
-                        var result = unitOfWork.SystemSettingsRepository.InsertAsync(setting).Result;
-                        unitOfWork.Complete();
+                        var result = systemSettingsService.AddSettings(setting).Result;
                         return mapper.Map<SystemSettings>(result);
                     }
                     catch (Exception e)
