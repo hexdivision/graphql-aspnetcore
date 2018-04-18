@@ -2,18 +2,19 @@
 using GraphQL.Types;
 using PathWays.Data.Model;
 
-namespace PathWays.Models
+namespace PathWays.Types
 {
     public class SystemSettingsType : ObjectGraphType<SystemSettings>
     {
         public SystemSettingsType()
         {
             Name = "SystemSettings";
-            Description = "A mechanical creature in the Star Wars universe.";
+            Description = "SystemSettings";
 
             Field(x => x.SystemSettingsId).Description("The Id of the SystemSettings.");
             Field(x => x.Key, nullable: true).Description("The key of the SystemSettings.");
             Field(d => d.Value, nullable: true).Description("The value function of the SystemSettings.");
+            Field(d => d.Type).Description("The value function of the SystemSettings.");
         }
     }
 
@@ -23,6 +24,7 @@ namespace PathWays.Models
         {
             Name = "SystemSettingsInputType";
             Field<NonNullGraphType<StringGraphType>>("key");
+            Field<NonNullGraphType<StringGraphType>>("type");
             Field<NonNullGraphType<StringGraphType>>("value");
         }
     }

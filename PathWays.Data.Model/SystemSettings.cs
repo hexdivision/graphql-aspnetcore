@@ -8,6 +8,6 @@
 
         public string Value { get; set; }
 
-        public byte Type { get; set; }
+        public int Type { get; set; }
     }
 }

@@ -10,8 +10,12 @@ using Microsoft.Extensions.Logging;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
+using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
-using PathWays.Models;
+using PathWays.Mutations;
+using PathWays.Queries;
+using PathWays.Services.SystemSettingsService;
+using PathWays.Types;
 using PathWays.UserResolverService;
 
 namespace PathWays
@@ -34,23 +38,26 @@ namespace PathWays
 
             services.AddGraphQl(schema =>
             {
-                schema.SetQueryType<PathWaysQuery>();
-                schema.SetMutationType<PathWaysMutation>();
+                schema.SetQueryType<SystemSettingsQuery>();
+                schema.SetMutationType<SystemSettingsMutation>();
             });
 
-            services.AddScoped<PathWaysQuery>();
-            services.AddScoped<PathWaysMutation>();
+            services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
-            services.AddTransient<ISystemUserRepository, SystemUserRepository>();
-            services.AddTransient<ISystemSettingsRepository, SystemSettingsRepository>();
-            services.AddTransient<ITokenRepository, TokenRepository>();
-            services.AddTransient<SystemSettingsType>();
-            services.AddTransient<SystemSettingsInputType>();
+            services.AddScoped<SystemSettingsQuery>();
+            services.AddScoped<SystemSettingsMutation>();
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+
+            services.AddSingleton<ISystemSettingsService, SystemSettingsService>();
+
+            services.AddScoped<ISystemUserRepository, SystemUserRepository>();
+            services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
+
+            services.AddScoped<SystemSettingsType>();
+            services.AddScoped<SystemSettingsInputType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();
-
-            services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
             var sp = services.BuildServiceProvider();
         }
