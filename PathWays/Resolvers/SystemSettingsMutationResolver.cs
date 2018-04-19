@@ -2,18 +2,26 @@
 using AutoMapper;
 using GraphQL.Types;
 using PathWays.Data.Model;
+using PathWays.GraphQL;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Types;
 
-namespace PathWays.Mutations
+namespace PathWays.Resolvers
 {
-    public class SystemSettingsMutation : ObjectGraphType
+    public class SystemSettingsMutationResolver : IMutationResolver
     {
-        public SystemSettingsMutation(ISystemSettingsService systemSettingsService, IMapper mapper)
-        {
-            Name = "Mutation";
+        private readonly ISystemSettingsService _systemSettingsService;
+        private readonly IMapper _mapper;
 
-            Field<SystemSettingsType>(
+        public SystemSettingsMutationResolver(ISystemSettingsService systemSettingsService, IMapper mapper)
+        {
+            _systemSettingsService = systemSettingsService;
+            _mapper = mapper;
+        }
+
+        public void Resolve(GraphQLMutation graphQLMutation)
+        {
+            graphQLMutation.Field<SystemSettingsType>(
                 "createSetting",
                 arguments:
                     new QueryArguments(
@@ -23,8 +31,8 @@ namespace PathWays.Mutations
                     try
                     {
                         var setting = context.GetArgument<SystemSettings>("setting");
-                        var result = systemSettingsService.AddSettings(setting).Result;
-                        return mapper.Map<SystemSettings>(result);
+                        var result = _systemSettingsService.AddSettings(setting).Result;
+                        return _mapper.Map<SystemSettings>(result);
                     }
                     catch (Exception e)
                     {
