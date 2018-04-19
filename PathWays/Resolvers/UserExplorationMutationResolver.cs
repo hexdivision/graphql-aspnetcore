@@ -2,18 +2,26 @@
 using AutoMapper;
 using GraphQL.Types;
 using PathWays.Data.Model;
+using PathWays.GraphQL;
 using PathWays.Services.UserExplorationService;
 using PathWays.Types;
 
-namespace PathWays.Mutations
+namespace PathWays.Resolvers
 {
-    public class UserExplorationMutation : ObjectGraphType
+    public class UserExplorationMutationResolver : IMutationResolver
     {
-        public UserExplorationMutation(IUserExplorationService userExplorationService, IMapper mapper)
-        {
-            Name = "Mutation";
+        private readonly IMapper _mapper;
+        private readonly IUserExplorationService _userExplorationService;
 
-            Field<UserExplorationType>(
+        public UserExplorationMutationResolver(IMapper mapper, IUserExplorationService userExplorationService)
+        {
+            _mapper = mapper;
+            _userExplorationService = userExplorationService;
+        }
+
+        public void Resolve(GraphQLMutation graphQLMutation)
+        {
+            graphQLMutation.Field<UserExplorationType>(
                 "createUserExploration",
                 arguments:
                 new QueryArguments(
@@ -23,8 +31,8 @@ namespace PathWays.Mutations
                     try
                     {
                         var userExploration = context.GetArgument<UserExploration>("user_exploration");
-                        var result = userExplorationService.CreateUserExploration(userExploration);
-                        return mapper.Map<UserExplorationType>(result);
+                        var result = _userExplorationService.CreateUserExploration(userExploration);
+                        return _mapper.Map<UserExplorationType>(result);
                     }
                     catch (Exception e)
                     {

@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Mutations\" />
+    <Folder Include="Queries\" />
     <Folder Include="wwwroot\" />
     <Folder Include="Types\" />
     <Folder Include="GraphQL\" />
-    <Folder Include="Resolvers\" />
   </ItemGroup>
 
   <ItemGroup>
