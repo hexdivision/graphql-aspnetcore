@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using GraphQl.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,11 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.SystemSettings;
-using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
-using PathWays.Mutations;
-using PathWays.Queries;
+using PathWays.GraphQL;
+using PathWays.Resolvers;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Types;
 using PathWays.UserResolverService;
@@ -38,14 +38,17 @@ namespace PathWays
 
             services.AddGraphQl(schema =>
             {
-                schema.SetQueryType<SystemSettingsQuery>();
-                schema.SetMutationType<SystemSettingsMutation>();
+                schema.SetQueryType<GraphQLQuery>();
+                schema.SetMutationType<GraphQLMutation>();
             });
 
             services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
-            services.AddScoped<SystemSettingsQuery>();
-            services.AddScoped<SystemSettingsMutation>();
+            services.AddScoped<GraphQLQuery>();
+            services.AddScoped<GraphQLMutation>();
+            services.AddScoped<IQueryResolver, SystemSettingsQueryResolver>();
+            services.AddScoped<IMutationResolver, SystemSettingsMutationResolver>();
+
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<ISystemSettingsService, SystemSettingsService>();
