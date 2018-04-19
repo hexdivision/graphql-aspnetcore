@@ -1,4 +1,5 @@
 ﻿using System;
+using GraphQL.Authorization;
 using GraphQL.Types;
 using PathWays.Data.Model;
 
@@ -8,6 +9,7 @@ namespace PathWays.Types
     {
         public SystemSettingsType()
         {
+            this.AuthorizeWith("AdminPolicy");
             Name = "SystemSettings";
             Description = "SystemSettings";
 

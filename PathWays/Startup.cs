@@ -1,12 +1,16 @@
-﻿using System.Reflection;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using GraphQl.AspNetCore;
+using GraphQL.Authorization;
+using GraphQL.Authorization.Extension;
+using GraphQL.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.SystemSettings;
@@ -41,6 +45,8 @@ namespace PathWays
                 schema.SetQueryType<GraphQLQuery>();
                 schema.SetMutationType<GraphQLMutation>();
             });
+
+            services.AddGraphQLAuth();
 
             services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
@@ -89,6 +95,23 @@ namespace PathWays
 
             app.UseGraphQl("/graphql", options =>
             {
+                var rules = app.ApplicationServices.GetServices<IValidationRule>();
+
+                foreach (IValidationRule rule in rules)
+                {
+                    options.ValidationRules.Add(rule);
+                }
+
+                options.BuildUserContext = ctx =>
+                {
+                    var userContext = new GraphQLUserContext
+                    {
+                        User = ctx.User
+                    };
+
+                    return Task.FromResult(userContext);
+                };
+
                 options.FormatOutput = false;
             });
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using AutoMapper;
+using GraphQL.Authorization;
 using GraphQL.Types;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
@@ -19,6 +20,7 @@ namespace PathWays.Resolvers
             _mapper = mapper;
         }
 
+        [GraphQLAuthorize(Policy = "AnotherPolicy")]
         public void Resolve(GraphQLMutation graphQLMutation)
         {
             graphQLMutation.Field<SystemSettingsType>(
