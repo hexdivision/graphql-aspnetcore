@@ -3,6 +3,7 @@ using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
+using PathWays.Data.Repositories.UserExploration;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -15,6 +16,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         IRoleRepository RoleRepository { get; }
 
         ISystemSettingsRepository SystemSettingsRepository { get; }
+
+        IUserExplorationRepository UserExplorationRepository { get; }
 
         Task<int> Complete();
     }

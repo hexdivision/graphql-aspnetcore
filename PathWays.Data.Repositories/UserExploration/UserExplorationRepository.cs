@@ -5,7 +5,7 @@ namespace PathWays.Data.Repositories.UserExploration
 {
     public class UserExplorationRepository : PathWaysRepository<Model.UserExploration>, IUserExplorationRepository
     {
-        protected UserExplorationRepository(PathWaysContext context)
+        public UserExplorationRepository(PathWaysContext context)
             : base(context)
         {
         }

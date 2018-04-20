@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.UnitOfWork;
 
@@ -13,19 +15,24 @@ namespace PathWays.Services.UserExplorationService
             _unitOfWork = unitOfWork;
         }
 
-        public UserExploration CreateUserExploration(UserExploration userExploration)
+        public async Task<UserExploration> CreateUserExploration(UserExploration userExploration)
         {
-            throw new System.NotImplementedException();
+            var result = await _unitOfWork.UserExplorationRepository.InsertAsync(userExploration);
+            await _unitOfWork.Complete();
+
+            return result;
         }
 
-        public UserExploration GetUserExploration(int explorationId)
+        public async Task<UserExploration> GetUserExploration(int explorationId)
         {
-            throw new System.NotImplementedException();
+            var result = await _unitOfWork.UserExplorationRepository.GetByIdAsync(explorationId);
+            return result;
         }
 
-        public List<UserExploration> GetUserExplorations()
+        public async Task<ICollection<UserExploration>> GetUserExplorations()
         {
-            throw new System.NotImplementedException();
+            var result = await _unitOfWork.UserExplorationRepository.GetAllAsync();
+            return result;
         }
     }
 }
