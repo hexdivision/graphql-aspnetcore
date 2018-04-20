@@ -19,7 +19,8 @@ namespace GraphQL.Authorization.Extension
             {
                 var authSettings = new AuthorizationSettings();
 
-                authSettings.AddPolicy("AdminPolicy", _ => _.RequireClaim("role", "Admin"));
+                authSettings.AddPolicy("Admin", _ => _.RequireClaim("role", "Admin"));
+                authSettings.AddPolicy("User", _ => _.RequireClaim("role", "User"));
 
                 return authSettings;
             });

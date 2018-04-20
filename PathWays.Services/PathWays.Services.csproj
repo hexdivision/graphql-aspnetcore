@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="SystemSettingsService\" />
+    <Folder Include="TokenService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PathWays.Data.Repositories\PathWays.Data.Repositories.csproj" />

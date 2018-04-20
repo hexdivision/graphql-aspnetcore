@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using GraphQL.Authorization;
 using GraphQL.Types;
@@ -10,7 +9,6 @@ using PathWays.Types;
 
 namespace PathWays.Resolvers
 {
-    [GraphQLAuthorize(Policy = "AdminPolicy")]
     public class SystemSettingsQueryResolver : IQueryResolver
     {
         private readonly ISystemSettingsService _systemSettingsService;
@@ -42,7 +40,7 @@ namespace PathWays.Resolvers
                     var settings = _systemSettingsService.GetListAsync().Result;
                     var systemSettings = _mapper.Map<List<SystemSettings>>(settings);
                     return systemSettings;
-                });
+            }).AuthorizeWith("User");
         }
     }
 }
