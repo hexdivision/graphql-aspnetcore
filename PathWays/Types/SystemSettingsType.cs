@@ -9,7 +9,6 @@ namespace PathWays.Types
     {
         public SystemSettingsType()
         {
-            this.AuthorizeWith("AdminPolicy");
             Name = "SystemSettings";
             Description = "SystemSettings";
 
@@ -25,9 +24,9 @@ namespace PathWays.Types
         public SystemSettingsInputType()
         {
             Name = "SystemSettingsInputType";
-            Field<NonNullGraphType<StringGraphType>>("key");
-            Field<NonNullGraphType<StringGraphType>>("type");
-            Field<NonNullGraphType<StringGraphType>>("value");
+            Field<NonNullGraphType<StringGraphType>>("Key");
+            Field<NonNullGraphType<StringGraphType>>("Type");
+            Field<NonNullGraphType<StringGraphType>>("Value");
         }
     }
 }

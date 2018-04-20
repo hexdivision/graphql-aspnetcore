@@ -56,8 +56,8 @@ namespace PathWays
             services.AddScoped<GraphQLMutation>();
             services.AddScoped<SystemSettingsQueryResolver>();
             services.AddScoped<SystemSettingsMutationResolver>();
-            services.AddScoped<SystemSettingsQueryResolver>();
-            services.AddScoped<SystemSettingsMutationResolver>();
+            services.AddScoped<UserExplorationQueryResolver>();
+            services.AddScoped<UserExplorationMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 

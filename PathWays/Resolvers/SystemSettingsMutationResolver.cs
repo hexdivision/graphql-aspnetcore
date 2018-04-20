@@ -20,7 +20,6 @@ namespace PathWays.Resolvers
             _mapper = mapper;
         }
 
-        [GraphQLAuthorize(Policy = "AnotherPolicy")]
         public void Resolve(GraphQLMutation graphQLMutation)
         {
             graphQLMutation.Field<SystemSettingsType>(
