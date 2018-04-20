@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using GraphQL.Types;
+using PathWays.Data.Model;
 using PathWays.GraphQL;
 using PathWays.Services.UserExplorationService;
 using PathWays.Types;
@@ -27,8 +28,8 @@ namespace PathWays.Resolvers
                 resolve: context =>
                 {
                     var id = context.GetArgument<int>("id");
-                    var userExploration = _userExplorationService.GetUserExploration(id);
-                    var userExplorationType = _mapper.Map<UserExplorationType>(userExploration);
+                    var userExploration = _userExplorationService.GetUserExploration(id).Result;
+                    var userExplorationType = _mapper.Map<UserExploration>(userExploration);
                     return userExplorationType;
                 });
 
@@ -36,8 +37,8 @@ namespace PathWays.Resolvers
                 "user_explorations",
                 resolve: context =>
                 {
-                    var userExplorations = _userExplorationService.GetUserExplorations();
-                    var userExplorationsType = _mapper.Map<List<UserExplorationType>>(userExplorations);
+                    var userExplorations = _userExplorationService.GetUserExplorations().Result;
+                    var userExplorationsType = _mapper.Map<List<UserExploration>>(userExplorations);
                     return userExplorationsType;
                 });
         }

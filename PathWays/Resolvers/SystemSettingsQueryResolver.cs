@@ -30,7 +30,7 @@ namespace PathWays.Resolvers
                 resolve: context =>
                 {
                     var id = context.GetArgument<string>("id");
-                    var setting = _systemSettingsService.GetSetting(id);
+                    var setting = _systemSettingsService.GetSetting(id).Result;
                     var systemSettings = _mapper.Map<SystemSettings>(setting);
                     return systemSettings;
                 });
