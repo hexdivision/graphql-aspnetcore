@@ -6,5 +6,6 @@ namespace PathWays.Services.TokenService
 {
     public interface ITokenService
     {
+        bool Login(string user, string password);
     }
 }

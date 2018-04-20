@@ -13,5 +13,11 @@ namespace PathWays.Services.TokenService
         {
             _unitOfWork = unitOfWork;
         }
+
+        public bool Login(string user, string password)
+        {
+            // TODO: Check if user credentials are correct
+            return true;
+        }
     }
 }

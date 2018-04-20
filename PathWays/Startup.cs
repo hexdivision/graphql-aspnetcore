@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using GraphQl.AspNetCore;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,6 +71,25 @@ namespace PathWays
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnTokenValidated = context =>
+                        {
+                            // TODO: Determine users roles
+                            string clientId = context.Principal.FindFirstValue("appid");
+
+                            var claims = new List<Claim>
+                                {
+                                    new Claim(ClaimTypes.Role, "User"),
+                                };
+
+                            var appIdentity = new ClaimsIdentity(claims);
+
+                            context.Principal.AddIdentity(appIdentity);
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 

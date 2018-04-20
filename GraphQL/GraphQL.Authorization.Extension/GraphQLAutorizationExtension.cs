@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,8 +20,8 @@ namespace GraphQL.Authorization.Extension
             {
                 var authSettings = new AuthorizationSettings();
 
-                authSettings.AddPolicy("Admin", _ => _.RequireClaim("role", "Admin"));
-                authSettings.AddPolicy("User", _ => _.RequireClaim("role", "User"));
+                authSettings.AddPolicy("Admin", _ => _.RequireClaim(ClaimTypes.Role, "Admin"));
+                authSettings.AddPolicy("User", _ => _.RequireClaim(ClaimTypes.Role, "User"));
 
                 return authSettings;
             });

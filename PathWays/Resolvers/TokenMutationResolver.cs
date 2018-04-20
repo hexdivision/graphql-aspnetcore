@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using GraphQL.Authorization;
@@ -38,11 +40,13 @@ namespace PathWays.Resolvers
                     try
                     {
                         var credentials = context.GetArgument<UserModel>("credentials");
+                        var isAutorized = _tokenService.Login(credentials.User, credentials.Password);
 
-                        if (credentials.User == string.Empty)
+                        if (isAutorized == false)
                         {
                             return new UnauthorizedAccessException();
                         }
+
                         var result = BuildToken(credentials);
                         return result;
                     }
