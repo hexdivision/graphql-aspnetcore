@@ -10,6 +10,7 @@ namespace PathWays
         {
             // SystemSettings
             CreateMap<SystemSettings, SystemSettingsType>(MemberList.Destination);
+            CreateMap<UserExploration, UserExplorationType>(MemberList.Destination);
         }
     }
 }

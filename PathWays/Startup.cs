@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using AutoMapper;
-using GraphQl.AspNetCore;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,9 +10,11 @@ using PathWays.Data.Model;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
+using PathWays.Data.Repositories.UserExploration;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
 using PathWays.Services.SystemSettingsService;
+using PathWays.Services.UserExplorationService;
 using PathWays.Types;
 using PathWays.UserResolverService;
 
@@ -46,18 +46,24 @@ namespace PathWays
 
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<GraphQLMutation>();
-            services.AddScoped<IQueryResolver, SystemSettingsQueryResolver>();
-            services.AddScoped<IMutationResolver, SystemSettingsMutationResolver>();
+            services.AddScoped<SystemSettingsQueryResolver>();
+            services.AddScoped<SystemSettingsMutationResolver>();
+            services.AddScoped<UserExplorationQueryResolver>();
+            services.AddScoped<UserExplorationMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<ISystemSettingsService, SystemSettingsService>();
+            services.AddSingleton<IUserExplorationService, UserExplorationService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
+            services.AddScoped<IUserExplorationRepository, UserExplorationRepository>();
 
             services.AddScoped<SystemSettingsType>();
             services.AddScoped<SystemSettingsInputType>();
+            services.AddScoped<UserExplorationType>();
+            services.AddScoped<UserExplorationInputType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

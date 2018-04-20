@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using AutoMapper;
 using GraphQL.Types;
 
 namespace PathWays.GraphQL
@@ -21,8 +20,8 @@ namespace PathWays.GraphQL
                     var resolverTypeInterface = resolverType.GetInterfaces().FirstOrDefault();
                     if (resolverTypeInterface != null)
                     {
-                        var resolver = serviceProvider.GetService(resolverTypeInterface) as IMutationResolver;
-                        resolver.Resolve(this);
+                        var resolver = serviceProvider.GetService(resolverType) as IMutationResolver;
+                        resolver?.Resolve(this);
                     }
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 using PathWays.Data.Model;
 
 namespace PathWays.Types
