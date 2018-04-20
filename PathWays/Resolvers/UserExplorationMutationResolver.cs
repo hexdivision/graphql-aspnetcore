@@ -31,12 +31,12 @@ namespace PathWays.Resolvers
                     try
                     {
                         var userExploration = context.GetArgument<UserExploration>("user_exploration");
-                        var result = _userExplorationService.CreateUserExploration(userExploration);
-                        return _mapper.Map<UserExplorationType>(result);
+                        var result = _userExplorationService.CreateUserExploration(userExploration).Result;
+                        return _mapper.Map<UserExploration>(result);
                     }
                     catch (Exception e)
                     {
-                        return e.Message;
+                    return e.Message;
                     }
                 });
         }

@@ -8,14 +8,14 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Types\" />
     <Folder Include="GraphQL\" />
+    <Folder Include="Resolvers\" />
+    <Folder Include="Authorization\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="GraphQl.AspNetCore" Version="1.0.4.55" />
-    <PackageReference Include="GraphQL.AspNetCore.Graphiql" Version="1.0.4.55" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
   </ItemGroup>
 
@@ -27,6 +27,9 @@
     <ProjectReference Include="..\PathWays.Data.Model\PathWays.Data.Model.csproj" />
     <ProjectReference Include="..\PathWays.Data.Repositories\PathWays.Data.Repositories.csproj" />
     <ProjectReference Include="..\PathWays.Services\PathWays.Services.csproj" />
+    <ProjectReference Include="..\GraphQL\GraphQL.AspNetCore.Graphiql\GraphQL.AspNetCore.Graphiql.csproj" />
+    <ProjectReference Include="..\GraphQL\GraphQl.AspNetCore\GraphQl.AspNetCore.csproj" />
+    <ProjectReference Include="..\GraphQL\GraphQL.Authorization\GraphQL.Authorization.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -37,6 +40,7 @@
     <Compile Remove="Controllers\GraphQLController.cs" />
     <Compile Remove="Middlewares\GraphQlMiddleware.cs" />
     <Compile Remove="Middlewares\GraphQlMiddlewareExtensions.cs" />
+    <Compile Remove="Authorization\GraphQLAuthorization.cs" />
   </ItemGroup>
     <Import Project="..\PathWays.Shared\ProjectBuildProperties.targets" />
 

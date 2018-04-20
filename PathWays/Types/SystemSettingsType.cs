@@ -1,4 +1,6 @@
-﻿using GraphQL.Types;
+﻿using System;
+using GraphQL.Authorization;
+using GraphQL.Types;
 using PathWays.Data.Model;
 
 namespace PathWays.Types
@@ -22,9 +24,9 @@ namespace PathWays.Types
         public SystemSettingsInputType()
         {
             Name = "SystemSettingsInputType";
-            Field<NonNullGraphType<StringGraphType>>("key");
-            Field<NonNullGraphType<StringGraphType>>("type");
-            Field<NonNullGraphType<StringGraphType>>("value");
+            Field<NonNullGraphType<StringGraphType>>("Key");
+            Field<NonNullGraphType<StringGraphType>>("Type");
+            Field<NonNullGraphType<StringGraphType>>("Value");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using GraphQL.Authorization;
 using GraphQL.Types;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
@@ -9,6 +10,7 @@ using PathWays.Types;
 
 namespace PathWays.Resolvers
 {
+    [GraphQLAuthorize(Policy = "AdminPolicy")]
     public class SystemSettingsQueryResolver : IQueryResolver
     {
         private readonly ISystemSettingsService _systemSettingsService;

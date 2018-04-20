@@ -28,16 +28,16 @@ namespace PathWays.Types
         public UserExplorationInputType()
         {
             Name = "UserExplorationInputType";
-            Field<NonNullGraphType<IntGraphType>>("organization_id");
-            Field<NonNullGraphType<IntGraphType>>("domain_id");
-            Field<BooleanGraphType>("accepted_terms");
-            Field<StringGraphType>("access_code");
+            Field<NonNullGraphType<IntGraphType>>("OrganizationId");
+            Field<NonNullGraphType<IntGraphType>>("DomainId");
+            Field<BooleanGraphType>("AcceptedTerms");
+            Field<StringGraphType>("AccessCode");
             ////TODO: Explore byte graph type
             ////Field<NonNullGraphType<IntGraphType>>("exploration_status");
-            Field<DateGraphType>("exploration_completed_date");
-            Field<BooleanGraphType>("is_deleted");
-            Field<NonNullGraphType<DateGraphType>>("created_date");
-            Field<DateGraphType>("modified_date");
+            Field<DateGraphType>("ExplorationCompletionDate");
+            Field<BooleanGraphType>("IsDeleted");
+            Field<NonNullGraphType<DateGraphType>>("CreatedDate");
+            Field<DateGraphType>("ModifiedDate");
         }
     }
 }
