@@ -20,8 +20,8 @@ namespace PathWays.GraphQL
                     var resolverTypeInterface = resolverType.GetInterfaces().FirstOrDefault();
                     if (resolverTypeInterface != null)
                     {
-                        var resolver = serviceProvider.GetService(resolverTypeInterface) as IQueryResolver;
-                        resolver.Resolve(this);
+                        var resolver = serviceProvider.GetService(resolverType) as IQueryResolver;
+                        resolver?.Resolve(this);
                     }
                 }
             }
