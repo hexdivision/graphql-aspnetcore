@@ -3,6 +3,6 @@ version: '3.4'
 services:
   pathways:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "8080:80"
