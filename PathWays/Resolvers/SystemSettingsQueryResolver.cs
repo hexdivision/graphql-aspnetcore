@@ -40,7 +40,7 @@ namespace PathWays.Resolvers
                     var settings = _systemSettingsService.GetListAsync().Result;
                     var systemSettings = _mapper.Map<List<SystemSettings>>(settings);
                     return systemSettings;
-            }).AuthorizeWith("User");
+            });
         }
     }
 }

@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  pathways:
+    image: pathways
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    build:
+      context: .
+      dockerfile: PathWays/Dockerfile
+    ports:
+      - "8080:80"
+    links:
+      - pathways_db
+    depends_on:
+      - pathways_db
+    networks:
+      - pathwaysnetwork
+
+  pathways_db:
+    image: microsoft/mssql-server-linux:2017-latest
+    hostname: pathways_db
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: '!234Qwer'
+      MSSQL_PID: Developer
+    ports:
+      - 1433:1433
+    volumes:
+      - server-data:/var/opt/mssql
+    networks:
+      - pathwaysnetwork
+
+volumes:
+  server-data:
+    driver: local
+
+networks:
+  pathwaysnetwork:
+    driver: bridge
