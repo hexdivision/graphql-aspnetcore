@@ -4,7 +4,11 @@ EXPOSE 80
 
 FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /src
+
 COPY PathWays.sln ./
+COPY PathWays.Shared/stylecop.json PathWays.Shared/
+COPY PathWays.Shared/StyleCopeRules.ruleset PathWays.Shared/
+COPY PathWays.Shared/ProjectBuildProperties.targets PathWays.Shared/
 COPY PathWays/PathWays.csproj PathWays/
 COPY PathWays.Data.Model/PathWays.Data.Model.csproj PathWays.Data.Model/
 COPY PathWays.Common.Utilities/PathWays.Common.Utilities.csproj PathWays.Common.Utilities/

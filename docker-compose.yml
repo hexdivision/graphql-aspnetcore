@@ -4,10 +4,10 @@ services:
   pathways:
     image: pathways
     environment:
-      - ASPNETCORE_ENVIRONMENT=Staging
+      - ASPNETCORE_ENVIRONMENT=Development
     build:
       context: .
-      dockerfile: PathWays/Dockerfile
+      dockerfile: Dockerfile/Dockerfile
     ports:
       - "8080:80"
     links:
