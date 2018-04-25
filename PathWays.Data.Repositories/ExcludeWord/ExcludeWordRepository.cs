@@ -6,7 +6,7 @@ namespace PathWays.Data.Repositories.ExcludeWord
 {
     public class ExcludeWordRepository : PathWaysRepository<AccessCodeExcludeWord>, IExcludeWordRepository
     {
-        protected ExcludeWordRepository(PathWaysContext context)
+        public ExcludeWordRepository(PathWaysContext context)
             : base(context)
         {
         }

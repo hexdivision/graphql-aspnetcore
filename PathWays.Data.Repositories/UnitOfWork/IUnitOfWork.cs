@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PathWays.Data.Repositories.ExcludeWord;
 using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
@@ -18,6 +19,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         ISystemSettingsRepository SystemSettingsRepository { get; }
 
         IUserExplorationRepository UserExplorationRepository { get; }
+
+        IExcludeWordRepository ExcludeWordRepository { get; }
 
         Task<int> Complete();
     }

@@ -45,8 +45,7 @@ namespace PathWays.Services.UserExplorationService
 
         private async Task<string> GenereateAccessCode()
         {
-            // TODO: Add Exclude words
-            var badWords = new List<string>(); ////_unitOfWork.ExcludeWordRepository.GetAllWords();
+            var badWords = _unitOfWork.ExcludeWordRepository.GetAllWords();
             var evidenceCode = await GetAccessCode(Constants.AccessCodeLenght, badWords);
             return evidenceCode;
         }

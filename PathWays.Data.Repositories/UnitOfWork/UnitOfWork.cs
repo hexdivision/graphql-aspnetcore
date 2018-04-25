@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PathWays.Data.Model;
+using PathWays.Data.Repositories.ExcludeWord;
 using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
@@ -20,6 +21,7 @@ namespace PathWays.Data.Repositories.UnitOfWork
         private IRoleRepository roleRepository = null;
         private ISystemSettingsRepository systemSettingsRepository = null;
         private IUserExplorationRepository userExplorationRepository = null;
+        private IExcludeWordRepository excludeWordRepository = null;
 
         public UnitOfWork(PathWaysContext context)
         {
@@ -35,6 +37,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         public ISystemSettingsRepository SystemSettingsRepository => systemSettingsRepository ?? new SystemSettingsRepository(_context);
 
         public IUserExplorationRepository UserExplorationRepository => userExplorationRepository ?? new UserExplorationRepository(_context);
+
+        public IExcludeWordRepository ExcludeWordRepository => excludeWordRepository ?? new ExcludeWordRepository(_context);
 
         public async Task<int> Complete()
         {
