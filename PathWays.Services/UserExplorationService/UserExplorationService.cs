@@ -22,6 +22,8 @@ namespace PathWays.Services.UserExplorationService
         public async Task<UserExploration> CreateUserExploration(UserExploration userExploration)
         {
             userExploration.AccessCode = await GenereateAccessCode();
+            userExploration.IsDeleted = false;
+            userExploration.ExplorationStatus = (byte)ExplorationStatus.InProgress;
 
             var result = await _unitOfWork.UserExplorationRepository.InsertAsync(userExploration);
             await _unitOfWork.Complete();

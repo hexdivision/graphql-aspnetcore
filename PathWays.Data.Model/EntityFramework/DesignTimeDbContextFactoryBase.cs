@@ -35,7 +35,7 @@ namespace PathWays.Data.Model.EntityFramework
             var builder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{environmentName}.json", false)
+                .AddJsonFile($"appsettings.{environmentName}.json", true)
                 .AddEnvironmentVariables();
 
             var config = builder.Build();

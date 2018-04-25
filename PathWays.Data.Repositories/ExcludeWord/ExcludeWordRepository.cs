@@ -1,4 +1,5 @@
-﻿using PathWays.Data.Model;
+﻿using System.Linq;
+using PathWays.Data.Model;
 using PathWays.Data.Repositories.Base;
 
 namespace PathWays.Data.Repositories.ExcludeWord
@@ -8,6 +9,12 @@ namespace PathWays.Data.Repositories.ExcludeWord
         protected ExcludeWordRepository(PathWaysContext context)
             : base(context)
         {
+        }
+
+        public IQueryable<string> GetAllWords()
+        {
+            var excludedWords = Context.AccessCodeExcludeWords.Select(w => w.ExcludeWord);
+            return excludedWords;
         }
     }
 }

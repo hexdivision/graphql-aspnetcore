@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
 {
-    public class AccessCodeExcludeWord
+    public class AccessCodeExcludeWord : BaseEntity
     {
         public int AccessCodeExcludeWordId { get; set; }
 

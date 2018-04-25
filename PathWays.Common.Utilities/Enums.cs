@@ -127,9 +127,9 @@ namespace PathWays.Common.Utilities
         Bambora = 1
     }
 
-    public enum AttachmentType
+    public enum ExplorationStatus
     {
-        Dispute = 1,
-        Common = 2
+        InProgress = 0,
+        Completed = 1
     }
 }

@@ -39,7 +39,7 @@ namespace PathWays.Resolvers
                     {
                         return e.Message;
                     }
-                });
+            });
         }
     }
 }
