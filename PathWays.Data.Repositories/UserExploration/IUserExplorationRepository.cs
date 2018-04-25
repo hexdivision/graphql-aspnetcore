@@ -7,5 +7,7 @@ namespace PathWays.Data.Repositories.UserExploration
     public interface IUserExplorationRepository : IRepository<Model.UserExploration>
     {
         Task<List<string>> GetAccessCodes(char firstLetter);
+
+        Task<Model.UserExploration> GetByAccessCode(string accessCode);
     }
 }

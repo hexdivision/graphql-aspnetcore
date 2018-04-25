@@ -23,5 +23,11 @@ namespace PathWays.Data.Repositories.UserExploration
 
             return accessCodes;
         }
+
+        public async Task<Model.UserExploration> GetByAccessCode(string accessCode)
+        {
+            var userExploration = await Context.UserExplorations.FirstOrDefaultAsync(p => p.AccessCode.Equals(accessCode));
+            return userExploration;
+        }
     }
 }

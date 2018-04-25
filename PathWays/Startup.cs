@@ -79,7 +79,6 @@ namespace PathWays
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
-                        // TODO:
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
@@ -110,7 +109,6 @@ namespace PathWays
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<GraphQLMutation>();
             services.AddScoped<TokenQueryResolver>();
-            services.AddScoped<TokenMutationResolver>();
             services.AddScoped<SystemSettingsQueryResolver>();
             services.AddScoped<SystemSettingsMutationResolver>();
             services.AddScoped<UserExplorationQueryResolver>();

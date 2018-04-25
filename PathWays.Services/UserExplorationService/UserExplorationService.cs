@@ -31,9 +31,37 @@ namespace PathWays.Services.UserExplorationService
             return result;
         }
 
+        public async Task<bool> DeleteUserExploration(int explorationId)
+        {
+            var exploration = await _unitOfWork.UserExplorationRepository.GetByIdAsync(explorationId);
+            if (exploration != null)
+            {
+                exploration.IsDeleted = true;
+                _unitOfWork.UserExplorationRepository.Attach(exploration);
+                var result = await _unitOfWork.Complete();
+
+                if (result == 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
         public async Task<UserExploration> GetUserExploration(int explorationId)
         {
             var result = await _unitOfWork.UserExplorationRepository.GetByIdAsync(explorationId);
+            return result;
+        }
+
+        public async Task<UserExploration> GetUserExploration(string accessCode)
+        {
+            var result = await _unitOfWork.UserExplorationRepository.GetByAccessCode(accessCode);
             return result;
         }
 

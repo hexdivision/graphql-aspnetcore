@@ -74,6 +74,7 @@ namespace PathWays.Data.Model
 
         private void ApplyIsDeletedFilter(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserExploration>().HasQueryFilter(r => r.IsDeleted == false);
         }
 
         private void AddTimestamps()
