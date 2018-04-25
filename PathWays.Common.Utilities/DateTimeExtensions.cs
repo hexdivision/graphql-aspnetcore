@@ -6,12 +6,12 @@ namespace PathWays.Common.Utilities
 {
     public static class DateTimeExtensions
     {
-        public static DateTime GetCmDateTime(this DateTime dt)
+        public static DateTime GetUtcDateTime(this DateTime dt)
         {
             return Convert.ToDateTime(dt.ToString("yyyy-MM-dd'T'HH:mm:ss.fffZ"));
         }
 
-        public static string ToCmDateTimeString(this DateTime? dt)
+        public static string ToUtcDateTimeString(this DateTime? dt)
         {
             if (!dt.HasValue)
             {
@@ -21,7 +21,7 @@ namespace PathWays.Common.Utilities
             return dt.Value.ToString("yyyy-MM-dd'T'HH:mm:ss.fffZ");
         }
 
-        public static string ToCmDateTimeString(this DateTime dt)
+        public static string ToUtcDateTimeString(this DateTime dt)
         {
             return dt.ToString("yyyy-MM-dd'T'HH:mm:ss.fffZ");
         }

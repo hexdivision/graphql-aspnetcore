@@ -11,19 +11,20 @@ using Microsoft.IdentityModel.Tokens;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
 using PathWays.Services.TokenService;
+using PathWays.Services.UserExplorationService;
 using PathWays.Types;
 
 namespace PathWays.Resolvers
 {
     public class TokenMutationResolver : IMutationResolver
     {
-        private readonly ITokenService _tokenService;
+        private readonly IUserExplorationService _userExplorationService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
 
-        public TokenMutationResolver(ITokenService tokenService, IMapper mapper, IConfiguration config)
+        public TokenMutationResolver(IUserExplorationService userExplorationService, IMapper mapper, IConfiguration config)
         {
-            _tokenService = tokenService;
+            _userExplorationService = userExplorationService;
             _mapper = mapper;
             _config = config;
         }
@@ -40,13 +41,6 @@ namespace PathWays.Resolvers
                     try
                     {
                         var credentials = context.GetArgument<UserModel>("credentials");
-                        var isAutorized = _tokenService.Login(credentials.User, credentials.Password);
-
-                        if (isAutorized == false)
-                        {
-                            return new UnauthorizedAccessException();
-                        }
-
                         var result = BuildToken(credentials);
                         return result;
                     }
@@ -64,10 +58,15 @@ namespace PathWays.Resolvers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.User),
+            };
 
             var token = new JwtSecurityToken(
                 jwtIssuer,
                 jwtIssuer,
+                claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: creds);
 

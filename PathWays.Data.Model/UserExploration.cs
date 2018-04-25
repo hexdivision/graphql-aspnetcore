@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
 {
-    public class UserExploration
+    public class UserExploration : BaseEntity
     {
         public int UserExplorationId { get; set; }
 
@@ -22,11 +23,6 @@ namespace PathWays.Data.Model
         public DateTime ExplorationCompletionDate { get; set; }
 
         public bool? IsDeleted { get; set; }
-
-        [Required]
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
 
         public virtual ICollection<UserExplorationToken> UserExplorationTokens { get; set; }
     }

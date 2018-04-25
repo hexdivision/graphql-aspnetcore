@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using PathWays.Common.Utilities;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.UnitOfWork;
 
@@ -17,6 +21,8 @@ namespace PathWays.Services.UserExplorationService
 
         public async Task<UserExploration> CreateUserExploration(UserExploration userExploration)
         {
+            userExploration.AccessCode = await GenereateAccessCode();
+
             var result = await _unitOfWork.UserExplorationRepository.InsertAsync(userExploration);
             await _unitOfWork.Complete();
 
@@ -33,6 +39,48 @@ namespace PathWays.Services.UserExplorationService
         {
             var result = await _unitOfWork.UserExplorationRepository.GetAllAsync();
             return result;
+        }
+
+        private async Task<string> GenereateAccessCode()
+        {
+            // TODO: Add Exclude words
+            var badWords = new List<string>(); ////_unitOfWork.ExcludeWordRepository.GetAllWords();
+            var evidenceCode = await GetAccessCode(Constants.AccessCodeLenght, badWords);
+            return evidenceCode;
+        }
+
+        private async Task<string> GetAccessCode(int length, IEnumerable<string> badWords)
+        {
+            const string Symbols = "234679ACDEFGHJKLMNPQRTUVWXTabcdefhikmnprstuvwxyz";
+            StringBuilder builder = new StringBuilder();
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                byte[] uintBuffer = new byte[sizeof(uint)];
+
+                while (length-- > 0)
+                {
+                    rng.GetBytes(uintBuffer);
+                    uint num = BitConverter.ToUInt32(uintBuffer, 0);
+                    builder.Append(Symbols[(int)(num % (uint)Symbols.Length)]);
+                }
+            }
+
+            var words = badWords.ToList();
+            var evidenceCode = builder.ToString();
+            var firstLetter = evidenceCode.FirstOrDefault();
+
+            var accessCodes = await _unitOfWork.UserExplorationRepository.GetAccessCodes(firstLetter);
+            if (accessCodes.Contains(evidenceCode))
+            {
+                await GetAccessCode(Constants.AccessCodeLenght, words);
+            }
+
+            if (words.Any(evidenceCode.ToLower().Contains))
+            {
+                await GetAccessCode(Constants.AccessCodeLenght, words);
+            }
+
+            return evidenceCode;
         }
     }
 }

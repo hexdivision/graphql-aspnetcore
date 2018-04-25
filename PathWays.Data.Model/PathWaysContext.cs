@@ -87,12 +87,10 @@ namespace PathWays.Data.Model
                 {
                     if (entity.State == EntityState.Added)
                     {
-                        ((BaseEntity)entity.Entity).CreatedDate = DateTime.UtcNow.GetCmDateTime();
-                        ((BaseEntity)entity.Entity).CreatedBy = userId;
+                        ((BaseEntity)entity.Entity).CreatedDate = DateTime.UtcNow.GetUtcDateTime();
                     }
 
-                    ((BaseEntity)entity.Entity).ModifiedDate = DateTime.UtcNow.GetCmDateTime();
-                    ((BaseEntity)entity.Entity).ModifiedBy = userId;
+                    ((BaseEntity)entity.Entity).ModifiedDate = DateTime.UtcNow.GetUtcDateTime();
                 }
             }
         }
