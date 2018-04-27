@@ -71,11 +71,17 @@ namespace PathWays.Resolvers
                         var userExploration = _userExplorationService.GetUserExploration(accessCode).Result;
                         if (userExploration != null)
                         {
+                            if (userExploration.IsDeleted == true || userExploration.ExplorationCompletionDate < DateTime.Today)
+                            {
+                                return "exploration is no longer accessible";
+                            }
                             var result = BuildToken();
                             return result;
                         }
-
-                        return string.Empty;
+                        else
+                        {
+                            return "unauthorized";
+                        }
                     }
                     catch (Exception e)
                     {

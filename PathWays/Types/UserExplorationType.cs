@@ -30,6 +30,7 @@ namespace PathWays.Types
             Name = "UserExplorationInputType";
             Field<NonNullGraphType<IntGraphType>>("DomainId");
             Field<NonNullGraphType<IntGraphType>>("OrganizationId");
+            Field<NonNullGraphType<DateGraphType>>("ExplorationCompletionDate");
         }
     }
 }
