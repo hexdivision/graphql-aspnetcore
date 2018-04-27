@@ -33,4 +33,16 @@ namespace PathWays.Types
             Field<NonNullGraphType<DateGraphType>>("ExplorationCompletionDate");
         }
     }
+
+    public class UserExplorationUpdateType : InputObjectGraphType
+    {
+        public UserExplorationUpdateType()
+        {
+            Name = "UserExplorationUpdateType";
+            Field<NonNullGraphType<IntGraphType>>("UserExplorationId");
+            Field<IntGraphType>("DomainId");
+            Field<IntGraphType>("OrganizationId");
+            Field<DateGraphType>("ExplorationCompletionDate");
+        }
+    }
 }

@@ -71,6 +71,11 @@ namespace PathWays.Services.UserExplorationService
             return result;
         }
 
+        public Task<UserExploration> UpdateUserExploration(UserExploration userExploration)
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<string> GenereateAccessCode()
         {
             var badWords = _unitOfWork.ExcludeWordRepository.GetAllWords();

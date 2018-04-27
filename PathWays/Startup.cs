@@ -130,6 +130,7 @@ namespace PathWays
             services.AddScoped<SystemSettingsInputType>();
             services.AddScoped<UserExplorationType>();
             services.AddScoped<UserExplorationInputType>();
+            services.AddScoped<UserExplorationUpdateType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

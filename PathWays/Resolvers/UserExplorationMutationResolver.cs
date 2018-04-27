@@ -34,12 +34,12 @@ namespace PathWays.Resolvers
                 "createUserExploration",
                 arguments:
                 new QueryArguments(
-                    new QueryArgument<NonNullGraphType<UserExplorationInputType>> { Name = "user_exploration" }),
+                    new QueryArgument<NonNullGraphType<UserExplorationInputType>> { Name = "userExploration" }),
                 resolve: context =>
                 {
                     try
                     {
-                        var userExploration = context.GetArgument<UserExploration>("user_exploration");
+                        var userExploration = context.GetArgument<UserExploration>("userExploration");
                         var result = _userExplorationService.CreateUserExploration(userExploration).Result;
                         return _mapper.Map<UserExploration>(result);
                     }
@@ -57,6 +57,32 @@ namespace PathWays.Resolvers
                     var userExplorationId = context.GetArgument<int>("userExplorationId");
                     var result = _userExplorationService.DeleteUserExploration(userExplorationId);
                     return result;
+                });
+
+            graphQLMutation.Field<UserExplorationType>(
+                "updateUserExploration",
+                arguments:
+                new QueryArguments(
+                    new QueryArgument<NonNullGraphType<UserExplorationUpdateType>> { Name = "userExploration" }),
+                resolve: context =>
+                {
+                    try
+                    {
+                        var userExploration = context.GetArgument<UserExploration>("userExploration");
+                        if (userExploration.UserExplorationId > 0)
+                        {
+                            var result = _userExplorationService.UpdateUserExploration(userExploration).Result;
+                            return _mapper.Map<UserExploration>(result);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
                 });
 
             graphQLMutation.Field<StringGraphType>(
