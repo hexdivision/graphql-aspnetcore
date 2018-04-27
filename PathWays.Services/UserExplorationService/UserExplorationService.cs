@@ -74,11 +74,11 @@ namespace PathWays.Services.UserExplorationService
         private async Task<string> GenereateAccessCode()
         {
             var badWords = _unitOfWork.ExcludeWordRepository.GetAllWords();
-            var evidenceCode = await GetAccessCode(Constants.AccessCodeLenght, badWords);
+            var evidenceCode = await GetAccessCode(Constants.AccessCodeLenght);
             return evidenceCode;
         }
 
-        private async Task<string> GetAccessCode(int length, IEnumerable<string> badWords)
+        private async Task<string> GetAccessCode(int length)
         {
             const string Symbols = "234679ACDEFGHJKLMNPQRTUVWXTabcdefhikmnprstuvwxyz";
             StringBuilder builder = new StringBuilder();
@@ -94,19 +94,19 @@ namespace PathWays.Services.UserExplorationService
                 }
             }
 
-            var words = badWords.ToList();
+            var words = _unitOfWork.ExcludeWordRepository.GetAllWords().ToList();
             var evidenceCode = builder.ToString();
             var firstLetter = evidenceCode.FirstOrDefault();
 
             var accessCodes = await _unitOfWork.UserExplorationRepository.GetAccessCodes(firstLetter);
             if (accessCodes.Contains(evidenceCode))
             {
-                await GetAccessCode(Constants.AccessCodeLenght, words);
+                await GetAccessCode(Constants.AccessCodeLenght);
             }
 
             if (words.Any(evidenceCode.ToLower().Contains))
             {
-                await GetAccessCode(Constants.AccessCodeLenght, words);
+                await GetAccessCode(Constants.AccessCodeLenght);
             }
 
             return evidenceCode;
