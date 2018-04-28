@@ -76,17 +76,17 @@ namespace PathWays.Resolvers
                     {
                         var userExploration = context.GetArgument<UserExploration>("userExploration");
                         var id = userExploration.UserExplorationId;
-                        var originalUserExploration = _userExplorationService.GetNoTrackingUserExploration(id).Result;
 
-                        userExploration.ApplyPatchTo(ref originalUserExploration);
-                        if (userExploration.UserExplorationId > 0)
+                        if (id > 0)
                         {
+                            var originalUserExploration = _userExplorationService.GetNoTrackingUserExploration(id).Result;
+                            userExploration.ApplyPatchTo(ref originalUserExploration);
                             var result = _userExplorationService.UpdateUserExploration(originalUserExploration).Result;
                             return _mapper.Map<UserExploration>(result);
                         }
                         else
                         {
-                            return null;
+                            return "Model is Invalid";
                         }
                     }
                     catch (Exception e)
