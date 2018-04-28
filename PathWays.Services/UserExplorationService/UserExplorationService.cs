@@ -59,6 +59,12 @@ namespace PathWays.Services.UserExplorationService
             return result;
         }
 
+        public async Task<UserExploration> GetNoTrackingUserExploration(int explorationId)
+        {
+            var result = await _unitOfWork.UserExplorationRepository.GetNoTrackingByIdAsync(x => x.UserExplorationId == explorationId);
+            return result;
+        }
+
         public async Task<UserExploration> GetUserExploration(string accessCode)
         {
             var result = await _unitOfWork.UserExplorationRepository.GetByAccessCode(accessCode);
@@ -71,9 +77,17 @@ namespace PathWays.Services.UserExplorationService
             return result;
         }
 
-        public Task<UserExploration> UpdateUserExploration(UserExploration userExploration)
+        public async Task<UserExploration> UpdateUserExploration(UserExploration userExploration)
         {
-            throw new NotImplementedException();
+            _unitOfWork.UserExplorationRepository.Attach(userExploration);
+            var result = await _unitOfWork.Complete();
+
+            if (result == 1)
+            {
+                return userExploration;
+            }
+
+            return null;
         }
 
         private async Task<string> GenereateAccessCode()

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using GraphQL.Authorization;
 using GraphQL.Types;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using PathWays.Common.Utilities;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
 using PathWays.Services.UserExplorationService;
@@ -63,15 +69,19 @@ namespace PathWays.Resolvers
                 "updateUserExploration",
                 arguments:
                 new QueryArguments(
-                    new QueryArgument<NonNullGraphType<UserExplorationUpdateType>> { Name = "userExploration" }),
+                    new QueryArgument<UserExplorationUpdateType> { Name = "userExploration" }),
                 resolve: context =>
                 {
                     try
                     {
                         var userExploration = context.GetArgument<UserExploration>("userExploration");
+                        var id = userExploration.UserExplorationId;
+                        var originalUserExploration = _userExplorationService.GetNoTrackingUserExploration(id).Result;
+
+                        userExploration.ApplyPatchTo(ref originalUserExploration);
                         if (userExploration.UserExplorationId > 0)
                         {
-                            var result = _userExplorationService.UpdateUserExploration(userExploration).Result;
+                            var result = _userExplorationService.UpdateUserExploration(originalUserExploration).Result;
                             return _mapper.Map<UserExploration>(result);
                         }
                         else
