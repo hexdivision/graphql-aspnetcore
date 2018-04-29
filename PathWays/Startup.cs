@@ -61,6 +61,19 @@ namespace PathWays
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddCors(
+                options => options.AddPolicy(
+                    "AllowCors",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowCredentials()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .WithExposedHeaders("Token", "Content-Type", "Authorization");
+                    }));
+
             services.AddGraphQl(schema =>
             {
                 schema.SetQueryType<GraphQLQuery>();
@@ -186,6 +199,8 @@ namespace PathWays
 
             app.UseMvc();
             app.UseStaticFiles();
+
+            app.UseCors("AllowCors");
         }
     }
 }
