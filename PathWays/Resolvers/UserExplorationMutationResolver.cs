@@ -46,6 +46,12 @@ namespace PathWays.Resolvers
                     try
                     {
                         var userExploration = context.GetArgument<UserExploration>("userExploration");
+
+                        if (userExploration.ExplorationCompletionDate < DateTime.UtcNow)
+                        {
+                            return "Invalid Exploration Completion Date";
+                        }
+
                         var result = _userExplorationService.CreateUserExploration(userExploration).Result;
                         return _mapper.Map<UserExploration>(result);
                     }
@@ -109,14 +115,14 @@ namespace PathWays.Resolvers
                         {
                             if (userExploration.IsDeleted == true || userExploration.ExplorationCompletionDate < DateTime.Today)
                             {
-                                return "exploration is no longer accessible";
+                                return "Exploration is no longer accessible";
                             }
                             var result = BuildToken();
                             return result;
                         }
                         else
                         {
-                            return "unauthorized";
+                            return "Unauthorized";
                         }
                     }
                     catch (Exception e)
