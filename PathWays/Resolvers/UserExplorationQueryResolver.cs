@@ -23,7 +23,7 @@ namespace PathWays.Resolvers
         public void Resolve(GraphQLQuery graphQLQuery)
         {
             graphQLQuery.Field<UserExplorationType>(
-                "user_exploration",
+                "userExploration",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the user exploration" }),
                 resolve: context =>
                 {
@@ -34,7 +34,7 @@ namespace PathWays.Resolvers
                 });
 
             graphQLQuery.Field<ListGraphType<UserExplorationType>>(
-                "user_explorations",
+                "userExplorations",
                 resolve: context =>
                 {
                     var userExplorations = _userExplorationService.GetUserExplorations().Result;
