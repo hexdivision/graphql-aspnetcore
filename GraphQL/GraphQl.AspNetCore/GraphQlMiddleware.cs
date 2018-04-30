@@ -53,8 +53,15 @@ namespace GraphQl.AspNetCore
             // GraphQL HTTP only supports GET and POST methods.
             if (request.Method != "GET" && request.Method != "POST")
             {
+                if (request.Method == "OPTIONS")
+                {
+                    response.Headers.Add("Allow", "GET, POST");
+                    response.StatusCode = StatusCodes.Status200OK;
+                    return;
+                }
+
                 response.Headers.Add("Allow", "GET, POST");
-                response.StatusCode = 405;
+                response.StatusCode = StatusCodes.Status405MethodNotAllowed;
 
                 return;
             }
@@ -108,7 +115,7 @@ namespace GraphQl.AspNetCore
             var writer = new DocumentWriter(indent: _options.FormatOutput);
             var json = writer.Write(result);
 
-            response.StatusCode = 200;
+            response.StatusCode = StatusCodes.Status200OK;
             response.ContentType = "application/json; charset=utf-8";
 
             await response.WriteAsync(json);
