@@ -10,6 +10,7 @@ using GraphQL.Http;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -50,10 +51,20 @@ namespace GraphQl.AspNetCore
             HttpRequest request = httpContext.Request;
             HttpResponse response = httpContext.Response;
 
+            response.Headers.Add(CorsConstants.AccessControlAllowOrigin, CorsConstants.AnyOrigin);
+            response.Headers.Add(CorsConstants.AccessControlAllowCredentials, "True");
+            response.Headers.Add(CorsConstants.AccessControlAllowMethods, CorsConstants.AnyOrigin);
+            response.Headers.Add(CorsConstants.AccessControlAllowHeaders, "Token");
+
             // GraphQL HTTP only supports GET and POST methods.
-            if (request.Method != "GET" && request.Method != "POST" && request.Method != "OPTIONS")
+            if (request.Method != "GET" && request.Method != "POST")
             {
-                response.Headers.Add("Allow", "GET, POST");
+                if (request.Method == "OPTIONS")
+                {
+                    response.StatusCode = StatusCodes.Status200OK;
+                    return;
+                }
+
                 response.StatusCode = StatusCodes.Status405MethodNotAllowed;
 
                 return;
@@ -141,7 +152,7 @@ namespace GraphQl.AspNetCore
 
                 case "application/graphql":
                     // The whole body is the query
-                    parameters = new GraphQlParameters {Query = body};
+                    parameters = new GraphQlParameters { Query = body };
                     break;
 
                 default:
