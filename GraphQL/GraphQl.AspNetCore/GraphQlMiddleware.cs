@@ -51,10 +51,10 @@ namespace GraphQl.AspNetCore
             HttpRequest request = httpContext.Request;
             HttpResponse response = httpContext.Response;
 
-            response.Headers.Add(CorsConstants.AccessControlAllowOrigin, "http://rtbweb-int.hive1-cs.com");
-            response.Headers.Add(CorsConstants.AccessControlAllowCredentials, "True");
-            response.Headers.Add(CorsConstants.AccessControlAllowMethods, CorsConstants.AnyOrigin);
-            response.Headers.Add(CorsConstants.AccessControlAllowHeaders, "Token");
+            response.Headers.Add(CorsConstants.AccessControlAllowOrigin, CorsConstants.AnyOrigin);
+            response.Headers.Add(CorsConstants.AccessControlAllowCredentials, "true");
+            response.Headers.Add(CorsConstants.AccessControlAllowMethods, "GET, HEAD, OPTIONS, POST, PUT");
+            response.Headers.Add(CorsConstants.AccessControlAllowHeaders, "Authorization, Origin, Accept, X-Requested-With, Content-Type, Token");
 
             // GraphQL HTTP only supports GET and POST methods.
             if (request.Method != "GET" && request.Method != "POST")
@@ -62,6 +62,8 @@ namespace GraphQl.AspNetCore
                 if (request.Method == "OPTIONS")
                 {
                     response.StatusCode = StatusCodes.Status200OK;
+                    response.ContentType = "application/json; charset=utf-8";
+
                     return;
                 }
 
