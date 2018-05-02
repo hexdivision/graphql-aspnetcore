@@ -9,5 +9,7 @@ namespace PathWays.Data.Repositories.UserExploration
         Task<List<string>> GetAccessCodes(char firstLetter);
 
         Task<Model.UserExploration> GetByAccessCode(string accessCode);
+
+        Task<List<Model.UserExploration>> GetAllWithTokens();
     }
 }

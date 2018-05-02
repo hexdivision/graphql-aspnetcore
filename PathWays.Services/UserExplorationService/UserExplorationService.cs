@@ -77,6 +77,12 @@ namespace PathWays.Services.UserExplorationService
             return result;
         }
 
+        public async Task<UserExplorationToken> GetUserExplorationTokenById(UserExploration userExploration)
+        {
+            var result = await _unitOfWork.UserExplorationTokenRepository.GetNoTrackingByIdAsync(u => u.ExplorationId == userExploration.UserExplorationId);
+            return result;
+        }
+
         public async Task<UserExploration> UpdateUserExploration(UserExploration userExploration)
         {
             _unitOfWork.UserExplorationRepository.Attach(userExploration);

@@ -23,6 +23,7 @@ using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
+using PathWays.Data.Repositories.UserExplorationToken;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
 using PathWays.Services.SystemSettingsService;
@@ -136,6 +137,7 @@ namespace PathWays
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
             services.AddScoped<IUserExplorationRepository, UserExplorationRepository>();
+            services.AddScoped<IUserExplorationTokenRepository, UserExplorationTokenRepository>();
 
             services.AddScoped<UserType>();
             services.AddScoped<UserInputType>();
@@ -144,6 +146,7 @@ namespace PathWays
             services.AddScoped<UserExplorationType>();
             services.AddScoped<UserExplorationInputType>();
             services.AddScoped<UserExplorationUpdateType>();
+            services.AddScoped<UserExplorationTokenType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

@@ -10,6 +10,7 @@ using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
+using PathWays.Data.Repositories.UserExplorationToken;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -21,6 +22,7 @@ namespace PathWays.Data.Repositories.UnitOfWork
         private IRoleRepository roleRepository = null;
         private ISystemSettingsRepository systemSettingsRepository = null;
         private IUserExplorationRepository userExplorationRepository = null;
+        private IUserExplorationTokenRepository userExplorationTokenRepository = null;
         private IExcludeWordRepository excludeWordRepository = null;
 
         public UnitOfWork(PathWaysContext context)
@@ -37,6 +39,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         public ISystemSettingsRepository SystemSettingsRepository => systemSettingsRepository ?? new SystemSettingsRepository(_context);
 
         public IUserExplorationRepository UserExplorationRepository => userExplorationRepository ?? new UserExplorationRepository(_context);
+
+        public IUserExplorationTokenRepository UserExplorationTokenRepository => userExplorationTokenRepository ?? new UserExplorationTokenRepository(_context);
 
         public IExcludeWordRepository ExcludeWordRepository => excludeWordRepository ?? new ExcludeWordRepository(_context);
 

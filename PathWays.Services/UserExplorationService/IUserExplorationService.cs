@@ -16,6 +16,8 @@ namespace PathWays.Services.UserExplorationService
 
         Task<ICollection<UserExploration>> GetUserExplorations();
 
+        Task<UserExplorationToken> GetUserExplorationTokenById(UserExploration userExploration);
+
         Task<bool> DeleteUserExploration(int explorationId);
 
         Task<UserExploration> UpdateUserExploration(UserExploration userExploration);

@@ -30,5 +30,11 @@ namespace PathWays.Data.Repositories.UserExploration
             var userExploration = await Context.UserExplorations.FirstOrDefaultAsync(p => p.AccessCode.Equals(accessCode));
             return userExploration;
         }
+
+        public async Task<List<Model.UserExploration>> GetAllWithTokens()
+        {
+            var userExploration = await Context.UserExplorations.Include(u => u.UserExplorationTokens).ToListAsync();
+            return userExploration;
+        }
     }
 }

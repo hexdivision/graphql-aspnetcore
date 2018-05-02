@@ -1,11 +1,12 @@
 ﻿using GraphQL.Types;
 using PathWays.Data.Model;
+using PathWays.Services.UserExplorationService;
 
 namespace PathWays.Types
 {
     public class UserExplorationType : ObjectGraphType<UserExploration>
     {
-        public UserExplorationType()
+        public UserExplorationType(IUserExplorationService userExplorationService)
         {
             Name = "UserExploration";
             Description = "UserExploration";
@@ -20,6 +21,10 @@ namespace PathWays.Types
             Field(d => d.IsDeleted, nullable: true).Description("Whether exploration is marked as deleted.");
             Field(d => d.CreatedDate).Description("The creation date for the exploration.");
             Field(d => d.ModifiedDate, nullable: true).Description("The last modified date of the exploration.");
+
+            Field<UserExplorationTokenType>(
+                "token",
+                resolve: context => userExplorationService.GetUserExplorationTokenById(context.Source));
         }
     }
 

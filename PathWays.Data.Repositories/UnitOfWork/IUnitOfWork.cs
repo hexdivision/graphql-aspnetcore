@@ -5,6 +5,7 @@ using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
+using PathWays.Data.Repositories.UserExplorationToken;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -19,6 +20,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         ISystemSettingsRepository SystemSettingsRepository { get; }
 
         IUserExplorationRepository UserExplorationRepository { get; }
+
+        IUserExplorationTokenRepository UserExplorationTokenRepository { get; }
 
         IExcludeWordRepository ExcludeWordRepository { get; }
 
