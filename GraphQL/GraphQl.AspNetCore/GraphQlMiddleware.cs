@@ -51,15 +51,8 @@ namespace GraphQl.AspNetCore
             HttpResponse response = httpContext.Response;
 
             // GraphQL HTTP only supports GET and POST methods.
-            if (request.Method != "GET" && request.Method != "POST")
+            if (request.Method != "GET" && request.Method != "POST" && request.Method != "OPTIONS")
             {
-                if (request.Method == "OPTIONS")
-                {
-                    response.Headers.Add("Allow", "GET, POST");
-                    response.StatusCode = StatusCodes.Status200OK;
-                    return;
-                }
-
                 response.Headers.Add("Allow", "GET, POST");
                 response.StatusCode = StatusCodes.Status405MethodNotAllowed;
 

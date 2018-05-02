@@ -57,10 +57,6 @@ namespace PathWays
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
-            services.AddAutoMapper(typeof(Startup));
-
             services.AddCors(
                 options => options.AddPolicy(
                     "AllowCors",
@@ -73,6 +69,10 @@ namespace PathWays
                             .AllowAnyHeader()
                             .WithExposedHeaders("Token", "Content-Type", "Authorization");
                     }));
+
+            services.AddMvc();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddGraphQl(schema =>
             {
