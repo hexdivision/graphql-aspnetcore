@@ -51,7 +51,7 @@ namespace GraphQl.AspNetCore
             HttpRequest request = httpContext.Request;
             HttpResponse response = httpContext.Response;
 
-            response.Headers.Add(CorsConstants.AccessControlAllowOrigin, "http://localhost");
+            response.Headers.Add(CorsConstants.AccessControlAllowOrigin, "http://rtbweb-int.hive1-cs.com");
             response.Headers.Add(CorsConstants.AccessControlAllowCredentials, "True");
             response.Headers.Add(CorsConstants.AccessControlAllowMethods, CorsConstants.AnyOrigin);
             response.Headers.Add(CorsConstants.AccessControlAllowHeaders, "Token");
