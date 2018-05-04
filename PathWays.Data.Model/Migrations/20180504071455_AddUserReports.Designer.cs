@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180504071455_AddUserReports")]
+    partial class AddUserReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,42 +40,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasKey("AccessCodeExcludeWordId");
 
                     b.ToTable("AccessCodeExcludeWords");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.ReportItem", b =>
-                {
-                    b.Property<int>("ReportItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AssociatedServiceId");
-
-                    b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<string>("EndingDescription")
-                        .HasMaxLength(2500);
-
-                    b.Property<int>("EndingId");
-
-                    b.Property<string>("EndingTitle")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<int>("EndingType");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<string>("SystemTitle")
-                        .HasMaxLength(500);
-
-                    b.Property<int>("UserReportId");
-
-                    b.HasKey("ReportItemId");
-
-                    b.HasIndex("UserReportId");
-
-                    b.ToTable("ReportItems");
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.SystemSettings", b =>
@@ -273,14 +238,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasIndex("SystemUserId");
 
                     b.ToTable("UserTokens");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.ReportItem", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.UserReport", "UserReport")
-                        .WithMany("ReportItems")
-                        .HasForeignKey("UserReportId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.SystemUser", b =>
