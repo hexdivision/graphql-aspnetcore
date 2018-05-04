@@ -51,6 +51,7 @@ namespace PathWays.Data.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ApplyDomainRelations(modelBuilder);
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
             ApplyColumnsCustomTypes(modelBuilder);
@@ -86,7 +87,17 @@ namespace PathWays.Data.Model
             modelBuilder.Entity<Organization>().Property(r => r.FlatMonthlyFee).HasColumnType("decimal(8,2)");
         }
 
-        private void AddTimestamps()
+        private void ApplyDomainRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain>()
+                .HasOne(d => d.Organization)
+                .WithMany(d => d.Domains)
+                .HasForeignKey(ds => ds.OrganizationId)
+                .HasPrincipalKey(d => d.OrganizationId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+            private void AddTimestamps()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
             if (entities != null)

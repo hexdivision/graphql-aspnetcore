@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PathWays.Data.Model.Base;
@@ -69,5 +70,7 @@ namespace PathWays.Data.Model
 
         [DefaultValue(1)]
         public int? OrganizationStatus { get; set; }
+
+        public virtual ICollection<Domain> Domains { get; set; }
     }
 }
