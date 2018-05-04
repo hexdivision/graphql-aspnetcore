@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180504083739_AddOrganization")]
+    partial class AddOrganization
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,8 +26,16 @@ namespace PathWays.Data.Model.Migrations
                     b.Property<int>("AccessCodeExcludeWordId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CreatedBy");
+
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<string>("ExcludeWord")
                         .HasMaxLength(6);
+
+                    b.Property<int?>("ModifiedBy");
+
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("AccessCodeExcludeWordId");
 
@@ -38,7 +47,7 @@ namespace PathWays.Data.Model.Migrations
                     b.Property<int>("OrganizationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<int?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -66,7 +75,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<int?>("ModifiedBy");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<Guid>("OrganizationGuid");
 
@@ -143,7 +152,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<bool>("AdminAccess");
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<int?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -154,7 +163,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<int?>("ModifiedBy");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Password")
                         .HasMaxLength(250);
@@ -206,7 +215,7 @@ namespace PathWays.Data.Model.Migrations
                     b.Property<string>("AccessCode")
                         .HasMaxLength(15);
 
-                    b.Property<int>("CreatedBy");
+                    b.Property<int?>("CreatedBy");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -220,7 +229,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<int?>("ModifiedBy");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("OrganizationId");
 

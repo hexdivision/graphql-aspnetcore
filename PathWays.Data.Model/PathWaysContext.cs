@@ -53,6 +53,7 @@ namespace PathWays.Data.Model
         {
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
+            ApplyColumnsCustomTypes(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -75,6 +76,14 @@ namespace PathWays.Data.Model
         private void ApplyIsDeletedFilter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserExploration>().HasQueryFilter(r => r.IsDeleted == false);
+        }
+
+        private void ApplyColumnsCustomTypes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Organization>().Property(r => r.PerVisitFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.PerComplationFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.PerServiceAccessFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.FlatMonthlyFee).HasColumnType("decimal(8,2)");
         }
 
         private void AddTimestamps()
