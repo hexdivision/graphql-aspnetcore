@@ -39,15 +39,19 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<AccessCodeExcludeWord> AccessCodeExcludeWords { get; set; }
 
-        public virtual DbSet<AccessCodeExcludeWord> Organizations { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
 
-        public virtual DbSet<AccessCodeExcludeWord> Domains { get; set; }
+        public virtual DbSet<Domain> Domains { get; set; }
 
-        public virtual DbSet<AccessCodeExcludeWord> Pathways { get; set; }
+        public virtual DbSet<Pathway> Pathways { get; set; }
 
-        public virtual DbSet<AccessCodeExcludeWord> Questions { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
 
-        public virtual DbSet<AccessCodeExcludeWord> Answers { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+
+        public virtual DbSet<Ending> Endings { get; set; }
+
+        public virtual DbSet<InlineResource> InlineResources { get; set; }
 
         #endregion
 
