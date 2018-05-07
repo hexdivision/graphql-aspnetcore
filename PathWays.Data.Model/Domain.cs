@@ -35,5 +35,9 @@ namespace PathWays.Data.Model
         public virtual ICollection<Question> Questions { get; set; }
 
         public virtual ICollection<Pathway> Pathways { get; set; }
+
+        public virtual ICollection<InlineResource> InlineResources { get; set; }
+
+        public virtual ICollection<Ending> Endings { get; set; }
     }
 }

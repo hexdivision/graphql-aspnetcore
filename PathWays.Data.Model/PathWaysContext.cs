@@ -65,6 +65,8 @@ namespace PathWays.Data.Model
             ApplyPathwayRelations(modelBuilder);
             ApplyQuestionRelations(modelBuilder);
             ApplyAnswerRelations(modelBuilder);
+            ApplyInlineResourceRelations(modelBuilder);
+            ApplyEndingRelations(modelBuilder);
 
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
@@ -151,6 +153,40 @@ namespace PathWays.Data.Model
                 .HasOne(d => d.Pathway)
                 .WithMany(d => d.Answers)
                 .HasForeignKey(ds => ds.PathwayToCreate)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyInlineResourceRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InlineResource>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.InlineResources)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<InlineResource>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.InlineResources)
+                .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyEndingRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ending>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Endings)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ending>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Endings)
+                .HasForeignKey(ds => ds.PathwayId)
                 .HasPrincipalKey(d => d.PathwayId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
