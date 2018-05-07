@@ -24,11 +24,14 @@ using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserReport;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
+using PathWays.Services.ReportItem;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Services.TokenService;
 using PathWays.Services.UserExplorationService;
+using PathWays.Services.UserReportService;
 using PathWays.Types;
 using PathWays.UserResolverService;
 
@@ -127,17 +130,25 @@ namespace PathWays
             services.AddScoped<SystemSettingsMutationResolver>();
             services.AddScoped<UserExplorationQueryResolver>();
             services.AddScoped<UserExplorationMutationResolver>();
+            services.AddScoped<UserReportQueryResolver>();
+            services.AddScoped<UserReportMutationResolver>();
+            services.AddScoped<ReportItemQueryResolver>();
+            services.AddScoped<ReportItemMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<ISystemSettingsService, SystemSettingsService>();
             services.AddSingleton<IUserExplorationService, UserExplorationService>();
             services.AddSingleton<ITokenService, TokenService>();
+            services.AddSingleton<IUserReportService, UserReportService>();
+            services.AddSingleton<IReportItemService, ReportItemService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
             services.AddScoped<IUserExplorationRepository, UserExplorationRepository>();
             services.AddScoped<IUserExplorationTokenRepository, UserExplorationTokenRepository>();
+            services.AddScoped<IUserReportRepository, UserReportRepository>();
+            services.AddScoped<IReportItemRepository, ReportItemRepository>();
 
             services.AddScoped<UserType>();
             services.AddScoped<UserInputType>();
@@ -147,6 +158,14 @@ namespace PathWays
             services.AddScoped<UserExplorationInputType>();
             services.AddScoped<UserExplorationUpdateType>();
             services.AddScoped<UserExplorationTokenType>();
+
+            services.AddScoped<UserReportType>();
+            services.AddScoped<UserReportInputType>();
+            services.AddScoped<UserReportUpdateType>();
+
+            services.AddScoped<ReportItemType>();
+            services.AddScoped<ReportItemInputType>();
+            services.AddScoped<ReportItemUpdateType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();
