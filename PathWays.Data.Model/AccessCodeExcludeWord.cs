@@ -3,7 +3,7 @@ using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
 {
-    public class AccessCodeExcludeWord : BaseEntity
+    public class AccessCodeExcludeWord
     {
         public int AccessCodeExcludeWordId { get; set; }
 

@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180504131915_AddDomain")]
+    partial class AddDomain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,49 +31,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.HasKey("AccessCodeExcludeWordId");
 
-                    b.ToTable("AccessCodeExcludeWord");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Answer", b =>
-                {
-                    b.Property<int>("AnswerId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AnswerDisplayText")
-                        .HasMaxLength(255);
-
-                    b.Property<int>("AnswerOrder");
-
-                    b.Property<string>("AnswerTitleText")
-                        .HasMaxLength(500);
-
-                    b.Property<int?>("AnswerType");
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("NextItemId");
-
-                    b.Property<int?>("NextItemType");
-
-                    b.Property<int?>("PathwayToCreate");
-
-                    b.Property<int>("QuestionId");
-
-                    b.HasKey("AnswerId");
-
-                    b.HasIndex("PathwayToCreate");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Answer");
+                    b.ToTable("AccessCodeExcludeWords");
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.Domain", b =>
@@ -115,106 +74,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("Domain");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Ending", b =>
-                {
-                    b.Property<int>("EndingId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<string>("EndingDescription");
-
-                    b.Property<string>("EndingTitle")
-                        .IsRequired();
-
-                    b.Property<int>("EndingType");
-
-                    b.Property<int?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("PathwayId");
-
-                    b.Property<string>("ReturnInstructions");
-
-                    b.Property<int?>("ReturnNextItemId");
-
-                    b.Property<int>("ReturnNextItemType");
-
-                    b.Property<int?>("ServiceId");
-
-                    b.Property<string>("SystemTitle");
-
-                    b.HasKey("EndingId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
-
-                    b.ToTable("Ending");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.InlineResource", b =>
-                {
-                    b.Property<int>("InlineResourceId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("DisplayId")
-                        .HasMaxLength(20);
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<string>("ExternalUrl")
-                        .HasMaxLength(1000);
-
-                    b.Property<int?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("NextItemId");
-
-                    b.Property<int?>("NextItemType");
-
-                    b.Property<int>("PathwayId");
-
-                    b.Property<string>("ResourceDescription")
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("ResourceInstructions")
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("ResourceTitle")
-                        .HasMaxLength(255);
-
-                    b.Property<int>("ResourceType");
-
-                    b.Property<bool?>("SharePublicly");
-
-                    b.Property<int?>("TemplateDoc");
-
-                    b.Property<string>("TemplateHtml");
-
-                    b.HasKey("InlineResourceId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
-
-                    b.ToTable("InlineResource");
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.Organization", b =>
@@ -294,87 +153,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasKey("OrganizationId");
 
                     b.ToTable("Organization");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Pathway", b =>
-                {
-                    b.Property<int>("PathwayId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<int?>("FirstObjectId");
-
-                    b.Property<int?>("FirstObjectType");
-
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<string>("PathAbbreviation")
-                        .IsRequired()
-                        .HasMaxLength(5);
-
-                    b.Property<string>("PathDescription")
-                        .IsRequired()
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("PathName")
-                        .IsRequired()
-                        .HasMaxLength(150);
-
-                    b.HasKey("PathwayId");
-
-                    b.HasIndex("DomainId");
-
-                    b.ToTable("Pathway");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Question", b =>
-                {
-                    b.Property<int>("QuestionId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("DisplayId")
-                        .HasMaxLength(20);
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("PathwayId");
-
-                    b.Property<string>("QuestionTitle")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("QuestionTitleText")
-                        .HasMaxLength(1500);
-
-                    b.Property<int?>("QuestionType");
-
-                    b.HasKey("QuestionId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
-
-                    b.ToTable("Question");
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.SystemSettings", b =>
@@ -553,71 +331,11 @@ namespace PathWays.Data.Model.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("PathWays.Data.Model.Answer", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("Answers")
-                        .HasForeignKey("PathwayToCreate")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("PathWays.Data.Model.Domain", b =>
                 {
                     b.HasOne("PathWays.Data.Model.Organization", "Organization")
                         .WithMany("Domains")
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Ending", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("Endings")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("Endings")
-                        .HasForeignKey("PathwayId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.InlineResource", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("InlineResources")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("InlineResources")
-                        .HasForeignKey("PathwayId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Pathway", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("Pathways")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Question", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("Questions")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("Questions")
-                        .HasForeignKey("PathwayId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180507075849_AddPathwayQuestionAnswer")]
+    partial class AddPathwayQuestionAnswer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,106 +116,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("Domain");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Ending", b =>
-                {
-                    b.Property<int>("EndingId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<string>("EndingDescription");
-
-                    b.Property<string>("EndingTitle")
-                        .IsRequired();
-
-                    b.Property<int>("EndingType");
-
-                    b.Property<int?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("PathwayId");
-
-                    b.Property<string>("ReturnInstructions");
-
-                    b.Property<int?>("ReturnNextItemId");
-
-                    b.Property<int>("ReturnNextItemType");
-
-                    b.Property<int?>("ServiceId");
-
-                    b.Property<string>("SystemTitle");
-
-                    b.HasKey("EndingId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
-
-                    b.ToTable("Ending");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.InlineResource", b =>
-                {
-                    b.Property<int>("InlineResourceId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<string>("DisplayId")
-                        .HasMaxLength(20);
-
-                    b.Property<int>("DomainId");
-
-                    b.Property<string>("ExternalUrl")
-                        .HasMaxLength(1000);
-
-                    b.Property<int?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("NextItemId");
-
-                    b.Property<int?>("NextItemType");
-
-                    b.Property<int>("PathwayId");
-
-                    b.Property<string>("ResourceDescription")
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("ResourceInstructions")
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("ResourceTitle")
-                        .HasMaxLength(255);
-
-                    b.Property<int>("ResourceType");
-
-                    b.Property<bool?>("SharePublicly");
-
-                    b.Property<int?>("TemplateDoc");
-
-                    b.Property<string>("TemplateHtml");
-
-                    b.HasKey("InlineResourceId");
-
-                    b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
-
-                    b.ToTable("InlineResource");
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.Organization", b =>
@@ -571,32 +472,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasOne("PathWays.Data.Model.Organization", "Organization")
                         .WithMany("Domains")
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.Ending", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("Endings")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("Endings")
-                        .HasForeignKey("PathwayId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.InlineResource", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Domain", "Domain")
-                        .WithMany("InlineResources")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
-                        .WithMany("InlineResources")
-                        .HasForeignKey("PathwayId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

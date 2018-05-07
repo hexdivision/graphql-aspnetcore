@@ -39,6 +39,20 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<AccessCodeExcludeWord> AccessCodeExcludeWords { get; set; }
 
+        public virtual DbSet<Organization> Organizations { get; set; }
+
+        public virtual DbSet<Domain> Domains { get; set; }
+
+        public virtual DbSet<Pathway> Pathways { get; set; }
+
+        public virtual DbSet<Question> Questions { get; set; }
+
+        public virtual DbSet<Answer> Answers { get; set; }
+
+        public virtual DbSet<Ending> Endings { get; set; }
+
+        public virtual DbSet<InlineResource> InlineResources { get; set; }
+
         #endregion
 
         #region Fluent API
@@ -51,8 +65,16 @@ namespace PathWays.Data.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ApplyDomainRelations(modelBuilder);
+            ApplyPathwayRelations(modelBuilder);
+            ApplyQuestionRelations(modelBuilder);
+            ApplyAnswerRelations(modelBuilder);
+            ApplyInlineResourceRelations(modelBuilder);
+            ApplyEndingRelations(modelBuilder);
+
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
+            ApplyColumnsCustomTypes(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -75,6 +97,102 @@ namespace PathWays.Data.Model
         private void ApplyIsDeletedFilter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserExploration>().HasQueryFilter(r => r.IsDeleted == false);
+        }
+
+        private void ApplyColumnsCustomTypes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Organization>().Property(r => r.PerVisitFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.PerComplationFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.PerServiceAccessFee).HasColumnType("decimal(8,2)");
+            modelBuilder.Entity<Organization>().Property(r => r.FlatMonthlyFee).HasColumnType("decimal(8,2)");
+        }
+
+        private void ApplyDomainRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain>()
+                .HasOne(d => d.Organization)
+                .WithMany(d => d.Domains)
+                .HasForeignKey(ds => ds.OrganizationId)
+                .HasPrincipalKey(d => d.OrganizationId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyPathwayRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pathway>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Pathways)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyQuestionRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Question>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Questions)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Question>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Questions)
+                .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyAnswerRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Answer>()
+                .HasOne(d => d.Question)
+                .WithMany(d => d.Answers)
+                .HasForeignKey(ds => ds.QuestionId)
+                .HasPrincipalKey(d => d.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Answers)
+                .HasForeignKey(ds => ds.PathwayToCreate)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyInlineResourceRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<InlineResource>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.InlineResources)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<InlineResource>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.InlineResources)
+                .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyEndingRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Ending>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Endings)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Ending>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Endings)
+                .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private void AddTimestamps()
