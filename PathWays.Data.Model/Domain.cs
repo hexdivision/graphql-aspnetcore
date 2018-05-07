@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
@@ -30,5 +31,9 @@ namespace PathWays.Data.Model
         public bool? EnforceTerms { get; set; }
 
         public string TermsOfUseHtml { get; set; }
+
+        public virtual ICollection<Question> Questions { get; set; }
+
+        public virtual ICollection<Pathway> Pathways { get; set; }
     }
 }

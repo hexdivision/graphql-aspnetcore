@@ -39,6 +39,16 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<AccessCodeExcludeWord> AccessCodeExcludeWords { get; set; }
 
+        public virtual DbSet<AccessCodeExcludeWord> Organizations { get; set; }
+
+        public virtual DbSet<AccessCodeExcludeWord> Domains { get; set; }
+
+        public virtual DbSet<AccessCodeExcludeWord> Pathways { get; set; }
+
+        public virtual DbSet<AccessCodeExcludeWord> Questions { get; set; }
+
+        public virtual DbSet<AccessCodeExcludeWord> Answers { get; set; }
+
         #endregion
 
         #region Fluent API
@@ -52,6 +62,10 @@ namespace PathWays.Data.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ApplyDomainRelations(modelBuilder);
+            ApplyPathwayRelations(modelBuilder);
+            ApplyQuestionRelations(modelBuilder);
+            ApplyAnswerRelations(modelBuilder);
+
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
             ApplyColumnsCustomTypes(modelBuilder);
@@ -97,7 +111,51 @@ namespace PathWays.Data.Model
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
-            private void AddTimestamps()
+        private void ApplyPathwayRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Pathway>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Pathways)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyQuestionRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Question>()
+                .HasOne(d => d.Domain)
+                .WithMany(d => d.Questions)
+                .HasForeignKey(ds => ds.DomainId)
+                .HasPrincipalKey(d => d.DomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Question>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Questions)
+                .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyAnswerRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Answer>()
+                .HasOne(d => d.Question)
+                .WithMany(d => d.Answers)
+                .HasForeignKey(ds => ds.QuestionId)
+                .HasPrincipalKey(d => d.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Answer>()
+                .HasOne(d => d.Pathway)
+                .WithMany(d => d.Answers)
+                .HasForeignKey(ds => ds.PathwayToCreate)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void AddTimestamps()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
             if (entities != null)
