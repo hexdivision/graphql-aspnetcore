@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
 {
-    public class UserReport
+    public class UserReport : BaseEntity
     {
         public int UserReportId { get; set; }
 
@@ -13,11 +14,8 @@ namespace PathWays.Data.Model
 
         public int? UserReportStatus { get; set; }
 
+        [DefaultValue(0)]
         public bool? IsDeleted { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<ReportItem> ReportItems { get; set; }
     }

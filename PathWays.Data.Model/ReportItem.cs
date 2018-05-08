@@ -1,9 +1,10 @@
-﻿using System;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using PathWays.Data.Model.Base;
 
 namespace PathWays.Data.Model
 {
-    public class ReportItem
+    public class ReportItem : BaseEntity
     {
         public int ReportItemId { get; set; }
 
@@ -12,6 +13,8 @@ namespace PathWays.Data.Model
         public UserReport UserReport { get; set; }
 
         public int EndingId { get; set; }
+
+        public Ending Ending { get; set; }
 
         public int EndingType { get; set; }
 
@@ -27,10 +30,7 @@ namespace PathWays.Data.Model
 
         public int? AssociatedServiceId { get; set; }
 
+        [DefaultValue(0)]
         public bool? IsDeleted { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
     }
 }
