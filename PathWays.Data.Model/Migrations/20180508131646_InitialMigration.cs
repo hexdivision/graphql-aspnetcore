@@ -13,7 +13,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     AccessCodeExcludeWordId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ExcludeWord = table.Column<string>(maxLength: 6, nullable: true)
                 },
                 constraints: table =>
@@ -26,7 +26,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     OrganizationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DisplayLogoId = table.Column<int>(nullable: true),
@@ -65,7 +65,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     SystemSettingsId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Key = table.Column<string>(nullable: true),
                     Type = table.Column<int>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -80,7 +80,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     SystemUserRoleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     RoleDescritption = table.Column<string>(maxLength: 255, nullable: false),
                     RoleName = table.Column<string>(maxLength: 50, nullable: false),
                     SessionDuration = table.Column<int>(nullable: false, defaultValue: 900)
@@ -95,7 +95,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     UserExplorationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AcceptedTerms = table.Column<bool>(nullable: true),
                     AccessCode = table.Column<string>(maxLength: 15, nullable: true),
                     CreatedBy = table.Column<int>(nullable: false),
@@ -118,7 +118,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     DomainId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DomainAbbreviation = table.Column<string>(maxLength: 7, nullable: true),
@@ -149,7 +149,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     SystemUserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AcceptsTextMessages = table.Column<bool>(nullable: true),
                     AccountEmail = table.Column<string>(maxLength: 100, nullable: true),
                     AccountMobile = table.Column<string>(maxLength: 15, nullable: true),
@@ -181,7 +181,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     UserExplorationTokenId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AccessCode = table.Column<string>(maxLength: 15, nullable: true),
                     AuthToken = table.Column<string>(maxLength: 250, nullable: false),
                     ExpiresOn = table.Column<DateTime>(nullable: false),
@@ -207,7 +207,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     UserReportId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: true),
@@ -232,7 +232,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     PathwayId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DomainId = table.Column<int>(nullable: false),
@@ -262,7 +262,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     UserTokenId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AuthToken = table.Column<string>(maxLength: 250, nullable: false),
                     ExpiresOn = table.Column<DateTime>(nullable: false),
                     IssuedOn = table.Column<DateTime>(nullable: false),
@@ -287,7 +287,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     EndingId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DomainId = table.Column<int>(nullable: false),
@@ -326,7 +326,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     InlineResourceId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DisplayId = table.Column<string>(maxLength: 20, nullable: true),
@@ -368,7 +368,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     QuestionId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     DisplayId = table.Column<string>(maxLength: 20, nullable: true),
@@ -403,7 +403,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     ReportItemId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AssociatedServiceId = table.Column<int>(nullable: true),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -439,7 +439,7 @@ namespace PathWays.Data.Model.Migrations
                 columns: table => new
                 {
                     AnswerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     AnswerDisplayText = table.Column<string>(maxLength: 255, nullable: true),
                     AnswerOrder = table.Column<int>(nullable: false),
                     AnswerTitleText = table.Column<string>(maxLength: 500, nullable: true),

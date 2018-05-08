@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PathWays.Data.Model.Migrations
 {
-    public partial class SeedAccessCodeExcludeWords : Migration
+    public partial class SeedAccessCodeExcludedWord : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"INSERT INTO AccessCodeExcludeWords (ExcludeWord) VALUES
+            migrationBuilder.Sql(@"INSERT INTO public.""AccessCodeExcludeWords"" (""ExcludeWord"") VALUES
                 ('a55') , ('anal'), ('anl'), ('anus'), ('arse'), ('ass'), ('bag'), ('ball'), ('bals'), ('balz'), ('bang'), ('barf'), ('bbw'), ('bdsm'), ('beer'), ('bich'), ('bitch'),
                 ('bj'), ('bone'), ('bong'), ('boob'), ('bra'), ('bum'), ('bung'), ('busty'), ('butt'), ('cl1t'), ('clit'), ('cock'), ('cok'), ('coks'), ('coon'), ('crack'), ('crak'),
                 ('cum'), ('cunt'), ('d1c'), ('die'), ('dik'), ('dix'), ('dong'), ('dyk'), ('fag'), ('fart'), ('fat'), ('felch'), ('fist'), ('foad'), ('frig'), ('fubar'), ('fuck'),
@@ -23,7 +25,7 @@ namespace PathWays.Data.Model.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(@"DELETE FROM AccessCodeExcludeWords");
+            migrationBuilder.Sql(@"DELETE FROM public.""AccessCodeExcludeWords""");
         }
     }
 }

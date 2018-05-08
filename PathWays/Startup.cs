@@ -121,7 +121,13 @@ namespace PathWays
                     };
                 });
 
-            services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
+            // Postgres
+            var connectionString = Configuration.GetConnectionString("DbConnection");
+            services.AddEntityFrameworkNpgsql().AddDbContext<PathWaysContext>(c => c.UseNpgsql(connectionString), ServiceLifetime.Scoped);
+
+            // MSSQL
+            //// connectionString = Configuration.GetConnectionString("DbConnection");
+            //// services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(connectionString, b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<GraphQLMutation>();
