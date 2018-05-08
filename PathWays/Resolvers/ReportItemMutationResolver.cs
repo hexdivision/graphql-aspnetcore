@@ -21,7 +21,7 @@ namespace PathWays.Resolvers
         }
 
         public void Resolve(GraphQLMutation graphQLMutation)
-        {
+         {
             graphQLMutation.Field<ReportItemType>(
                 "createReportItem",
                 arguments:

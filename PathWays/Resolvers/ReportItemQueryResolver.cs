@@ -32,7 +32,7 @@ namespace PathWays.Resolvers
                     return reportItemType;
                 });
 
-            graphQLQuery.Field<ListGraphType<UserReportType>>(
+            graphQLQuery.Field<ListGraphType<ReportItemType>>(
                 "reportItems",
                 resolve: context =>
                 {
