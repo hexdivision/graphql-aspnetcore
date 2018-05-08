@@ -75,6 +75,8 @@ namespace PathWays.Data.Model
             ApplyAnswerRelations(modelBuilder);
             ApplyInlineResourceRelations(modelBuilder);
             ApplyEndingRelations(modelBuilder);
+            ApplyUserReportRelations(modelBuilder);
+            ApplyReportItemRelations(modelBuilder);
 
             ApplyIsDeletedFilter(modelBuilder);
             AddDefaultValues(modelBuilder);
@@ -196,6 +198,33 @@ namespace PathWays.Data.Model
                 .WithMany(d => d.Endings)
                 .HasForeignKey(ds => ds.PathwayId)
                 .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyUserReportRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserReport>()
+                .HasOne(d => d.UserExploration)
+                .WithMany(d => d.UserReports)
+                .HasForeignKey(ds => ds.UserExplorationId)
+                .HasPrincipalKey(d => d.UserExplorationId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ApplyReportItemRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ReportItem>()
+                .HasOne(d => d.UserReport)
+                .WithMany(d => d.ReportItems)
+                .HasForeignKey(ds => ds.UserReportId)
+                .HasPrincipalKey(d => d.UserReportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ReportItem>()
+                .HasOne(d => d.Ending)
+                .WithMany(d => d.ReportItems)
+                .HasForeignKey(ds => ds.EndingId)
+                .HasPrincipalKey(d => d.EndingId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
