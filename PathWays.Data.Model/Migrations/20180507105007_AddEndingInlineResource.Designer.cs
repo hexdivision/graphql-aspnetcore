@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180507105007_AddEndingInlineResource")]
+    partial class AddEndingInlineResource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,42 +378,6 @@ namespace PathWays.Data.Model.Migrations
                     b.ToTable("Question");
                 });
 
-            modelBuilder.Entity("PathWays.Data.Model.ReportItem", b =>
-                {
-                    b.Property<int>("ReportItemId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AssociatedServiceId");
-
-                    b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<string>("EndingDescription")
-                        .HasMaxLength(2500);
-
-                    b.Property<int>("EndingId");
-
-                    b.Property<string>("EndingTitle")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<int>("EndingType");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<string>("SystemTitle")
-                        .HasMaxLength(500);
-
-                    b.Property<int>("UserReportId");
-
-                    b.HasKey("ReportItemId");
-
-                    b.HasIndex("UserReportId");
-
-                    b.ToTable("ReportItems");
-                });
-
             modelBuilder.Entity("PathWays.Data.Model.SystemSettings", b =>
                 {
                     b.Property<int>("SystemSettingsId")
@@ -561,28 +526,6 @@ namespace PathWays.Data.Model.Migrations
                     b.ToTable("UserExplorationTokens");
                 });
 
-            modelBuilder.Entity("PathWays.Data.Model.UserReport", b =>
-                {
-                    b.Property<int>("UserReportId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("CreatedDate");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int>("UserExplorationId");
-
-                    b.Property<int?>("UserReportStatus");
-
-                    b.HasKey("UserReportId");
-
-                    b.HasIndex("UserExplorationId");
-
-                    b.ToTable("UserReports");
-                });
-
             modelBuilder.Entity("PathWays.Data.Model.UserToken", b =>
                 {
                     b.Property<int>("UserTokenId")
@@ -679,14 +622,6 @@ namespace PathWays.Data.Model.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("PathWays.Data.Model.ReportItem", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.UserReport", "UserReport")
-                        .WithMany("ReportItems")
-                        .HasForeignKey("UserReportId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("PathWays.Data.Model.SystemUser", b =>
                 {
                     b.HasOne("PathWays.Data.Model.SystemUserRole", "SystemUserRole")
@@ -700,14 +635,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")
                         .WithMany("UserExplorationTokens")
                         .HasForeignKey("UserExplorationId");
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.UserReport", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")
-                        .WithMany("UserReports")
-                        .HasForeignKey("UserExplorationId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PathWays.Data.Model.UserToken", b =>
