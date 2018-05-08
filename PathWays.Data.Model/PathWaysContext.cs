@@ -53,6 +53,10 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<InlineResource> InlineResources { get; set; }
 
+        public virtual DbSet<UserReport> UserReports { get; set; }
+
+        public virtual DbSet<ReportItem> ReportItems { get; set; }
+
         #endregion
 
         #region Fluent API

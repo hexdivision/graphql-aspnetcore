@@ -6,6 +6,7 @@ using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserReport;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -24,6 +25,10 @@ namespace PathWays.Data.Repositories.UnitOfWork
         IUserExplorationTokenRepository UserExplorationTokenRepository { get; }
 
         IExcludeWordRepository ExcludeWordRepository { get; }
+
+        IUserReportRepository UserReportRepository { get; }
+
+        IReportItemRepository ReportItemRepository { get; }
 
         Task<int> Complete();
     }

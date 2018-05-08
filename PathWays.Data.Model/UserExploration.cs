@@ -26,6 +26,8 @@ namespace PathWays.Data.Model
         public bool? IsDeleted { get; set; }
 
         public virtual ICollection<UserExplorationToken> UserExplorationTokens { get; set; }
+
+        public virtual ICollection<UserReport> UserReports { get; set; }
     }
 
     ////public class UserExplorationUpdate : BaseEntity

@@ -10,7 +10,7 @@ namespace PathWays.Services.UserExplorationService
 
         Task<UserExploration> GetUserExploration(int explorationId);
 
-         Task<UserExploration> GetNoTrackingUserExploration(int explorationId);
+        Task<UserExploration> GetNoTrackingUserExploration(int explorationId);
 
         Task<UserExploration> GetUserExploration(string accessCode);
 
