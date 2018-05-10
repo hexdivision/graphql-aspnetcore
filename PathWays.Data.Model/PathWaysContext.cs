@@ -57,6 +57,10 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<ReportItem> ReportItems { get; set; }
 
+        public virtual DbSet<UserPathway> UserPathways { get; set; }
+
+        public virtual DbSet<UserStep> UserSteps { get; set; }
+
         #endregion
 
         #region Fluent API
@@ -248,6 +252,7 @@ namespace PathWays.Data.Model
                 }
             }
         }
+
         #endregion
     }
 }

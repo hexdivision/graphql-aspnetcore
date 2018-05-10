@@ -33,5 +33,7 @@ namespace PathWays.Data.Model
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<Answer> Answers { get; set; }
+
+        public virtual ICollection<UserStep> UserSteps { get; set; }
     }
 }

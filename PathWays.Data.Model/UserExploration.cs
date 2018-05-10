@@ -28,6 +28,10 @@ namespace PathWays.Data.Model
         public virtual ICollection<UserExplorationToken> UserExplorationTokens { get; set; }
 
         public virtual ICollection<UserReport> UserReports { get; set; }
+
+        public virtual ICollection<UserPathway> UserPathways { get; set; }
+
+        public virtual ICollection<UserStep> UserSteps { get; set; }
     }
 
     ////public class UserExplorationUpdate : BaseEntity
