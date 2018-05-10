@@ -24,14 +24,18 @@ using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserPathway;
 using PathWays.Data.Repositories.UserReport;
+using PathWays.Data.Repositories.UserStep;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
 using PathWays.Services.ReportItem;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Services.TokenService;
 using PathWays.Services.UserExplorationService;
+using PathWays.Services.UserPathwayService;
 using PathWays.Services.UserReportService;
+using PathWays.Services.UserStepService;
 using PathWays.Types;
 using PathWays.UserResolverService;
 
@@ -142,6 +146,8 @@ namespace PathWays
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IUserReportService, UserReportService>();
             services.AddSingleton<IReportItemService, ReportItemService>();
+            services.AddSingleton<IUserPathwayService, UserPathwayService>();
+            services.AddSingleton<IUserStepService, UserStepService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
@@ -149,6 +155,8 @@ namespace PathWays
             services.AddScoped<IUserExplorationTokenRepository, UserExplorationTokenRepository>();
             services.AddScoped<IUserReportRepository, UserReportRepository>();
             services.AddScoped<IReportItemRepository, ReportItemRepository>();
+            services.AddScoped<IUserPathwayRepository, UserPathwayRepository>();
+            services.AddScoped<IUserStepRepository, UserStepRepository>();
 
             services.AddScoped<UserType>();
             services.AddScoped<UserInputType>();

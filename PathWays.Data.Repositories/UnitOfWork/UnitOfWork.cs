@@ -11,7 +11,9 @@ using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserPathway;
 using PathWays.Data.Repositories.UserReport;
+using PathWays.Data.Repositories.UserStep;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -27,6 +29,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         private IExcludeWordRepository excludeWordRepository = null;
         private IUserReportRepository userReportRepository = null;
         private IReportItemRepository reportItemRepository = null;
+        private IUserPathwayRepository userPathwayRepository = null;
+        private IUserStepRepository userStepRepository = null;
 
         public UnitOfWork(PathWaysContext context)
         {
@@ -50,6 +54,10 @@ namespace PathWays.Data.Repositories.UnitOfWork
         public IUserReportRepository UserReportRepository => userReportRepository ?? new UserReportRepository(_context);
 
         public IReportItemRepository ReportItemRepository => reportItemRepository ?? new ReportItemRepository(_context);
+
+        public IUserPathwayRepository UserPathwayRepository => userPathwayRepository ?? new UserPathwayRepository(_context);
+
+        public IUserStepRepository UserStepRepository => userStepRepository ?? new UserStepRepository(_context);
 
         public async Task<int> Complete()
         {
