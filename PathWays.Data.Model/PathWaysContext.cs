@@ -75,6 +75,7 @@ namespace PathWays.Data.Model
         {
             ApplyDomainRelations(modelBuilder);
             ApplyPathwayRelations(modelBuilder);
+            ApplyUserPathwayRelations(modelBuilder);
             ApplyQuestionRelations(modelBuilder);
             ApplyAnswerRelations(modelBuilder);
             ApplyInlineResourceRelations(modelBuilder);
@@ -137,6 +138,16 @@ namespace PathWays.Data.Model
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
+        private void ApplyUserPathwayRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.UserPathway)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.UserPathwayId)
+                .HasPrincipalKey(d => d.UserPathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
         private void ApplyQuestionRelations(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Question>()
@@ -150,6 +161,13 @@ namespace PathWays.Data.Model
                 .HasOne(d => d.Pathway)
                 .WithMany(d => d.Questions)
                 .HasForeignKey(ds => ds.PathwayId)
+                .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.Question)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.QuestionId)
                 .HasPrincipalKey(d => d.PathwayId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
@@ -168,6 +186,13 @@ namespace PathWays.Data.Model
                 .WithMany(d => d.Answers)
                 .HasForeignKey(ds => ds.PathwayToCreate)
                 .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.Answer)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.AnswerId)
+                .HasPrincipalKey(d => d.AnswerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
