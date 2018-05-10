@@ -138,6 +138,8 @@ namespace PathWays
             services.AddScoped<UserReportMutationResolver>();
             services.AddScoped<ReportItemQueryResolver>();
             services.AddScoped<ReportItemMutationResolver>();
+            services.AddScoped<UserPathwayQueryResolver>();
+            services.AddScoped<UserPathwayMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
@@ -174,6 +176,10 @@ namespace PathWays
             services.AddScoped<ReportItemType>();
             services.AddScoped<ReportItemInputType>();
             services.AddScoped<ReportItemUpdateType>();
+
+            services.AddScoped<UserPathwayType>();
+            services.AddScoped<UserPathwayInputType>();
+            services.AddScoped<UserPathwayUpdateType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();
