@@ -27,6 +27,7 @@ using PathWays.Data.Repositories.UserExplorationToken;
 using PathWays.Data.Repositories.UserReport;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
+using PathWays.Services.PathwayService;
 using PathWays.Services.ReportItem;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Services.TokenService;
@@ -134,6 +135,8 @@ namespace PathWays
             services.AddScoped<UserReportMutationResolver>();
             services.AddScoped<ReportItemQueryResolver>();
             services.AddScoped<ReportItemMutationResolver>();
+            services.AddScoped<PathwayQueryResolver>();
+            services.AddScoped<PathwayMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
@@ -142,6 +145,7 @@ namespace PathWays
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IUserReportService, UserReportService>();
             services.AddSingleton<IReportItemService, ReportItemService>();
+            services.AddSingleton<IPathwayService, PathwayService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
@@ -166,6 +170,9 @@ namespace PathWays
             services.AddScoped<ReportItemType>();
             services.AddScoped<ReportItemInputType>();
             services.AddScoped<ReportItemUpdateType>();
+
+            services.AddScoped<PathwayType>();
+            services.AddScoped<PathwayInputType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();
