@@ -179,6 +179,7 @@ namespace PathWays
 
             services.AddScoped<PathwayType>();
             services.AddScoped<PathwayInputType>();
+            services.AddScoped<PathwayUpdateType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

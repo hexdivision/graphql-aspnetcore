@@ -39,4 +39,18 @@ namespace PathWays.Types
             Field<NonNullGraphType<StringGraphType>>("PathAbbreviation");
         }
     }
+
+    public class PathwayUpdateType : InputObjectGraphType
+    {
+        public PathwayUpdateType()
+        {
+            Name = "PathwayUpdateType";
+            Field<NonNullGraphType<IntGraphType>>("PathwayId");
+            Field<IntGraphType>("DomainId");
+            Field<StringGraphType>("PathName");
+            Field<StringGraphType>("PathDescription");
+            Field<StringGraphType>("PathAbbreviation");
+            Field<BooleanGraphType>("IsActive");
+        }
+    }
 }
