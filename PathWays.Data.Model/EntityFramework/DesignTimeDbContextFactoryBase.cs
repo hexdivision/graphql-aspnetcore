@@ -68,7 +68,11 @@ namespace PathWays.Data.Model.EntityFramework
                 "DesignTimeDbContextFactory.Create(string): Connection string: {0}",
                 connectionString);
 
-            optionsBuilder.UseSqlServer(connectionString);
+            // Postgres
+            optionsBuilder.UseNpgsql(connectionString);
+
+            // MSSQL
+            //// optionsBuilder.UseSqlServer(connectionString);
 
             DbContextOptions<TContext> options = optionsBuilder.Options;
 
