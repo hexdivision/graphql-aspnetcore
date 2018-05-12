@@ -1,6 +1,7 @@
 ﻿using System;
 using AutoMapper;
 using GraphQL.Types;
+using PathWays.Common.Utilities;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
 using PathWays.Services.ReportItem;
@@ -68,8 +69,7 @@ namespace PathWays.Resolvers
                             var originalReportItem = _reportItemService.GetByIdAsync(id).Result;
 
                             var reportDict = context.GetArgumentDictionary("reportItem");
-                            originalReportItem.PatchFromDictio
-                                              nary(reportDict);
+                            originalReportItem.PatchFromDictionary(reportDict);
 
                             var result = _reportItemService.UpdateAsync(originalReportItem).Result;
                             return _mapper.Map<ReportItem>(result);
