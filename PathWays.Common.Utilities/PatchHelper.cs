@@ -1,26 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace PathWays.Common.Utilities
 {
     public static class PatchHelper
     {
-        public static T ApplyPatchTo<T>(this object request, ref T entity)
+        public static T PatchFromDictionary<T>(this T request, IReadOnlyDictionary<string, object> dict)
         {
-            var requestJson = JsonConvert.SerializeObject(request, Formatting.None).ToLower();
-            var requestJobj = JObject.Parse(requestJson);
+            foreach (var item in dict)
+            {
+                PropertyInfo property = request.GetType().GetProperty(item.Key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
-            var entityJson = JsonConvert.SerializeObject(entity, Formatting.None).ToLower();
-            var entityJobj = JObject.Parse(entityJson);
+                // Find which property type (int, string, double? etc) the CURRENT property is...
+                Type tPropertyType = property.PropertyType;
 
-            entityJobj.Merge(requestJobj, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Union, MergeNullValueHandling = MergeNullValueHandling.Merge });
+                if (IsComplex(tPropertyType))
+                {
+                    throw new ArgumentException("Complex types are not supported");
+                }
 
-            entity = JsonConvert.DeserializeObject<T>(entityJobj.ToString());
+                // Fix nullables...
+                Type newT = Nullable.GetUnderlyingType(tPropertyType) ?? tPropertyType;
 
-            return entity;
+                // ...and change the type
+                object newA = Convert.ChangeType(item.Value, newT);
+                property.SetValue(request, newA, null);
+            }
+
+            return request;
+        }
+
+        public static bool IsComplex(Type typeIn)
+        {
+            if (typeIn.IsSubclassOf(typeof(System.ValueType)) || typeIn.Equals(typeof(string)))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

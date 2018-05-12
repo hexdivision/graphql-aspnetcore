@@ -32,7 +32,7 @@ namespace PathWays.Resolvers
         {
             graphQLMutation.Field<UserExplorationType>(
                 "createUserExploration",
-                arguments:
+                    arguments:
                 new QueryArguments(
                     new QueryArgument<NonNullGraphType<UserExplorationInputType>> { Name = "userExploration" }),
                 resolve: context =>
@@ -75,12 +75,20 @@ namespace PathWays.Resolvers
                     try
                     {
                         var userExploration = context.GetArgument<UserExploration>("userExploration");
+
                         var id = userExploration.UserExplorationId;
 
                         if (id > 0)
                         {
-                            var originalUserExploration = _userExplorationService.GetNoTrackingUserExploration(id).Result;
-                            userExploration.ApplyPatchTo(ref originalUserExploration);
+                            var originalUserExploration = _userExplorationService.GetUserExploration(id).Result;
+                            if (originalUserExploration == null)
+                            {
+                                return "Exploration Not Found";
+                            }
+
+                            var userExplorationDict = context.GetArgumentDictionary("userExploration");
+                            originalUserExploration.PatchFromDictionary(userExplorationDict);
+
                             var result = _userExplorationService.UpdateUserExploration(originalUserExploration).Result;
                             return _mapper.Map<UserExploration>(result);
                         }
@@ -134,16 +142,16 @@ namespace PathWays.Resolvers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, "Role3"),
-            };
+               {
+                    new Claim(ClaimTypes.NameIdentifier, "Role3"),
+               };
 
             var token = new JwtSecurityToken(
-                jwtIssuer,
-                jwtIssuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                 jwtIssuer,
+                 jwtIssuer,
+                 claims,
+                 expires: DateTime.Now.AddMinutes(30),
+                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

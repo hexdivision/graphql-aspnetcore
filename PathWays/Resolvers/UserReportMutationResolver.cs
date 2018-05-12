@@ -66,8 +66,11 @@ namespace PathWays.Resolvers
 
                         if (id > 0)
                         {
-                            var originalUserReport = _userReportService.GetNoTrackingAsync(id).Result;
-                            userReport.ApplyPatchTo(ref originalUserReport);
+                            var originalUserReport = _userReportService.GetUserReportAsync(id).Result;
+
+                            var userReportDict = context.GetArgumentDictionary("userReport");
+                            originalUserReport.PatchFromDictionary(userReportDict);
+
                             var result = _userReportService.UpdateAsync(originalUserReport).Result;
                             return _mapper.Map<UserReport>(result);
                         }

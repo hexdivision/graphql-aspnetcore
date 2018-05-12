@@ -1,7 +1,6 @@
 ﻿using System;
 using AutoMapper;
 using GraphQL.Types;
-using PathWays.Common.Utilities;
 using PathWays.Data.Model;
 using PathWays.GraphQL;
 using PathWays.Services.ReportItem;
@@ -66,8 +65,12 @@ namespace PathWays.Resolvers
 
                         if (id > 0)
                         {
-                            var originalReportItem = _reportItemService.GetNoTrackingByIdAsync(id).Result;
-                            reportItem.ApplyPatchTo(ref originalReportItem);
+                            var originalReportItem = _reportItemService.GetByIdAsync(id).Result;
+
+                            var reportDict = context.GetArgumentDictionary("reportItem");
+                            originalReportItem.PatchFromDictio
+                                              nary(reportDict);
+
                             var result = _reportItemService.UpdateAsync(originalReportItem).Result;
                             return _mapper.Map<ReportItem>(result);
                         }
