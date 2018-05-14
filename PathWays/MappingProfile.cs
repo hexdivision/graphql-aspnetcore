@@ -13,6 +13,8 @@ namespace PathWays
 
             // UserExploration
             CreateMap<UserExploration, UserExplorationType>(MemberList.Destination);
+
+            CreateMap<UserStep, UserStepType>(MemberList.Destination);
         }
     }
 }

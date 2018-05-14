@@ -3,19 +3,15 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using GraphQl.AspNetCore;
-using GraphQL.Authorization;
 using GraphQL.Authorization.Extension;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PathWays.Data.Model;
@@ -140,6 +136,8 @@ namespace PathWays
             services.AddScoped<ReportItemMutationResolver>();
             services.AddScoped<UserPathwayQueryResolver>();
             services.AddScoped<UserPathwayMutationResolver>();
+            services.AddScoped<UserStepQueryResolver>();
+            services.AddScoped<UserStepMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
@@ -180,6 +178,10 @@ namespace PathWays
             services.AddScoped<UserPathwayType>();
             services.AddScoped<UserPathwayInputType>();
             services.AddScoped<UserPathwayUpdateType>();
+
+            services.AddScoped<UserStepType>();
+            services.AddScoped<UserStepInputType>();
+            ////services.AddScoped<UserStepUpdateType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

@@ -15,7 +15,7 @@ namespace PathWays.Data.Model
 
         public int PathwayType { get; set; }
 
-        public int? PathwayId { get; set; }
+        public int PathwayId { get; set; }
 
         public Pathway Pathway { get; set; }
 

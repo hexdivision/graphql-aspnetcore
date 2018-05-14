@@ -27,9 +27,27 @@ namespace PathWays.Types
 
     public class UserPathwayInputType : ObjectGraphType<UserPathway>
     {
+        public UserPathwayInputType()
+        {
+            Name = "UserPathwayInputType";
+            Field<NonNullGraphType<IntGraphType>>("UserExplorationId");
+            Field<NonNullGraphType<IntGraphType>>("PathwayType");
+            Field<IntGraphType>("PathwayId");
+            Field<StringGraphType>("PathwayTitle");
+            Field<IntGraphType>("PathwayStatus");
+            Field<DateGraphType>("PathwayCompletionDate");
+        }
     }
 
     public class UserPathwayUpdateType : ObjectGraphType<UserPathway>
     {
+        public UserPathwayUpdateType()
+        {
+            Name = "UserPathwayUpdateType";
+            Field<NonNullGraphType<IntGraphType>>("UserExplorationId");
+            Field<StringGraphType>("PathwayTitle");
+            Field<IntGraphType>("PathwayStatus");
+            Field<DateGraphType>("PathwayCompletionDate");
+        }
     }
 }
