@@ -25,7 +25,7 @@ namespace PathWays.Types
         }
     }
 
-    public class UserPathwayInputType : ObjectGraphType<UserPathway>
+    public class UserPathwayInputType : InputObjectGraphType
     {
         public UserPathwayInputType()
         {
@@ -39,7 +39,7 @@ namespace PathWays.Types
         }
     }
 
-    public class UserPathwayUpdateType : ObjectGraphType<UserPathway>
+    public class UserPathwayUpdateType : InputObjectGraphType
     {
         public UserPathwayUpdateType()
         {
