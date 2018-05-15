@@ -25,6 +25,7 @@ using PathWays.Data.Repositories.UserReport;
 using PathWays.Data.Repositories.UserStep;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
+using PathWays.Services.PathwayService;
 using PathWays.Services.ReportItem;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Services.TokenService;
@@ -121,7 +122,13 @@ namespace PathWays
                     };
                 });
 
-            services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(Configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
+            // Postgres
+            var connectionString = Configuration.GetConnectionString("DbConnection");
+            services.AddEntityFrameworkNpgsql().AddDbContext<PathWaysContext>(c => c.UseNpgsql(connectionString), ServiceLifetime.Scoped);
+
+            // MSSQL
+            //// connectionString = Configuration.GetConnectionString("DbConnection");
+            //// services.AddDbContext<PathWaysContext>(c => c.UseSqlServer(connectionString, b => b.MigrationsAssembly("PathWays.Data.Model")), ServiceLifetime.Scoped);
 
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<GraphQLMutation>();
@@ -138,6 +145,8 @@ namespace PathWays
             services.AddScoped<UserPathwayMutationResolver>();
             services.AddScoped<UserStepQueryResolver>();
             services.AddScoped<UserStepMutationResolver>();
+            services.AddScoped<PathwayQueryResolver>();
+            services.AddScoped<PathwayMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
@@ -148,6 +157,7 @@ namespace PathWays
             services.AddSingleton<IReportItemService, ReportItemService>();
             services.AddSingleton<IUserPathwayService, UserPathwayService>();
             services.AddSingleton<IUserStepService, UserStepService>();
+            services.AddSingleton<IPathwayService, PathwayService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
             services.AddScoped<ISystemSettingsRepository, SystemSettingsRepository>();
@@ -182,6 +192,9 @@ namespace PathWays
             services.AddScoped<UserStepType>();
             services.AddScoped<UserStepInputType>();
             ////services.AddScoped<UserStepUpdateType>();
+
+            services.AddScoped<PathwayType>();
+            services.AddScoped<PathwayInputType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

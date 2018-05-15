@@ -24,7 +24,7 @@ namespace PathWays.Resolvers
         {
             graphQLQuery.Field<UserExplorationType>(
                 "userExploration",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the user exploration" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id", Description = "id of the user exploration" }),
                 resolve: context =>
                 {
                     var id = context.GetArgument<int>("id");

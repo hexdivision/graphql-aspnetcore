@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.ExcludeWord;
+using PathWays.Data.Repositories.Pathway;
 using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
@@ -31,6 +32,7 @@ namespace PathWays.Data.Repositories.UnitOfWork
         private IReportItemRepository reportItemRepository = null;
         private IUserPathwayRepository userPathwayRepository = null;
         private IUserStepRepository userStepRepository = null;
+        private IPathwayRepository pathwayRepository = null;
 
         public UnitOfWork(PathWaysContext context)
         {
@@ -58,6 +60,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         public IUserPathwayRepository UserPathwayRepository => userPathwayRepository ?? new UserPathwayRepository(_context);
 
         public IUserStepRepository UserStepRepository => userStepRepository ?? new UserStepRepository(_context);
+
+        public IPathwayRepository PathwayRepository => pathwayRepository ?? new PathwayRepository(_context);
 
         public async Task<int> Complete()
         {

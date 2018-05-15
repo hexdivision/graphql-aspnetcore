@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using PathWays.Data.Repositories.ExcludeWord;
+using PathWays.Data.Repositories.Pathway;
 using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.Token;
@@ -35,6 +36,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         IUserPathwayRepository UserPathwayRepository { get; }
 
         IUserStepRepository UserStepRepository { get; }
+
+        IPathwayRepository PathwayRepository { get; }
 
         Task<int> Complete();
     }
