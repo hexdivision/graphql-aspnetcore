@@ -8,7 +8,9 @@ using PathWays.Data.Repositories.Token;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserPathway;
 using PathWays.Data.Repositories.UserReport;
+using PathWays.Data.Repositories.UserStep;
 
 namespace PathWays.Data.Repositories.UnitOfWork
 {
@@ -31,6 +33,10 @@ namespace PathWays.Data.Repositories.UnitOfWork
         IUserReportRepository UserReportRepository { get; }
 
         IReportItemRepository ReportItemRepository { get; }
+
+        IUserPathwayRepository UserPathwayRepository { get; }
+
+        IUserStepRepository UserStepRepository { get; }
 
         IPathwayRepository PathwayRepository { get; }
 

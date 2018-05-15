@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PathWays.Data.Model.Base;
 
@@ -35,5 +36,7 @@ namespace PathWays.Data.Model
 
         [DefaultValue(0)]
         public bool IsDeleted { get; set; }
+
+        public virtual ICollection<UserStep> UserSteps { get; set; }
     }
 }

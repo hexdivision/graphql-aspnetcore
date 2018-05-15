@@ -11,14 +11,15 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180510103011_AddUserSteps")]
+    partial class AddUserSteps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("PathWays.Data.Model.AccessCodeExcludeWord", b =>
                 {

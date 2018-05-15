@@ -11,14 +11,15 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180510102012_AddUserPathways")]
+    partial class AddUserPathways
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("PathWays.Data.Model.AccessCodeExcludeWord", b =>
                 {
@@ -358,8 +359,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<int?>("PathwayId")
-                        .IsRequired();
+                    b.Property<int?>("PathwayId");
 
                     b.Property<string>("QuestionTitle")
                         .HasMaxLength(255);
@@ -372,6 +372,8 @@ namespace PathWays.Data.Model.Migrations
                     b.HasKey("QuestionId");
 
                     b.HasIndex("DomainId");
+
+                    b.HasIndex("PathwayId");
 
                     b.ToTable("Questions");
                 });
@@ -629,68 +631,6 @@ namespace PathWays.Data.Model.Migrations
                     b.ToTable("UserReports");
                 });
 
-            modelBuilder.Entity("PathWays.Data.Model.UserStep", b =>
-                {
-                    b.Property<int>("UserStepId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AnswerDisplayText");
-
-                    b.Property<int?>("AnswerId");
-
-                    b.Property<int>("CreatedBy");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<int?>("InlineResourceId");
-
-                    b.Property<int?>("InlineResourceType");
-
-                    b.Property<int?>("InternalResourceAction");
-
-                    b.Property<int?>("InternalResourceRating");
-
-                    b.Property<bool?>("IsDeleted");
-
-                    b.Property<int?>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedDate");
-
-                    b.Property<int?>("QuestionId");
-
-                    b.Property<string>("ResourceDescriptionText");
-
-                    b.Property<string>("ResourceResultData");
-
-                    b.Property<string>("ResourceResultText")
-                        .HasMaxLength(2000);
-
-                    b.Property<string>("ResourceTitle")
-                        .HasMaxLength(200);
-
-                    b.Property<int?>("StepCount");
-
-                    b.Property<int>("StepType");
-
-                    b.Property<int>("UserExplorationId");
-
-                    b.Property<int>("UserPathwayId");
-
-                    b.HasKey("UserStepId");
-
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("InlineResourceId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("UserExplorationId");
-
-                    b.HasIndex("UserPathwayId");
-
-                    b.ToTable("UserSteps");
-                });
-
             modelBuilder.Entity("PathWays.Data.Model.UserToken", b =>
                 {
                     b.Property<int>("UserTokenId")
@@ -832,34 +772,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")
                         .WithMany("UserReports")
                         .HasForeignKey("UserExplorationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
-            modelBuilder.Entity("PathWays.Data.Model.UserStep", b =>
-                {
-                    b.HasOne("PathWays.Data.Model.Answer", "Answer")
-                        .WithMany("UserSteps")
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.InlineResource", "InlineResource")
-                        .WithMany("UserSteps")
-                        .HasForeignKey("InlineResourceId");
-
-                    b.HasOne("PathWays.Data.Model.Question", "Question")
-                        .WithMany("UserSteps")
-                        .HasForeignKey("QuestionId")
-                        .HasPrincipalKey("PathwayId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")
-                        .WithMany("UserSteps")
-                        .HasForeignKey("UserExplorationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PathWays.Data.Model.UserPathway", "UserPathway")
-                        .WithMany("UserSteps")
-                        .HasForeignKey("UserPathwayId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

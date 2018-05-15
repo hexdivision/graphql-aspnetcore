@@ -42,5 +42,7 @@ namespace PathWays.Data.Model
         public virtual ICollection<InlineResource> InlineResources { get; set; }
 
         public virtual ICollection<Ending> Endings { get; set; }
+
+        public virtual ICollection<UserPathway> UserPathways { get; set; }
     }
 }
