@@ -52,35 +52,35 @@ namespace PathWays.Resolvers
                     return result;
                 });
 
-            graphQLMutation.Field<UserPathwayType>(
-                "updateUserPathway",
-                arguments:
-                new QueryArguments(
-                    new QueryArgument<UserPathwayUpdateType> { Name = "userPathway" }),
-                resolve: context =>
-                {
-                    try
-                    {
-                        var userPathway = context.GetArgument<UserPathway>("userPathway");
-                        var id = userPathway.UserPathwayId;
+            ////graphQLMutation.Field<UserPathwayType>(
+            ////    "updateUserPathway",
+            ////    arguments:
+            ////    new QueryArguments(
+            ////        new QueryArgument<UserPathwayUpdateType> { Name = "userPathway" }),
+            ////    resolve: context =>
+            ////    {
+            ////        try
+            ////        {
+            ////            var userPathway = context.GetArgument<UserPathway>("userPathway");
+            ////            var id = userPathway.UserPathwayId;
 
-                        if (id > 0)
-                        {
-                            var originalUserPathway = _userPathwayService.GetNoTrackingAsync(id).Result;
-                            userPathway.ApplyPatchTo(ref originalUserPathway);
-                            var result = _userPathwayService.UpdateAsync(originalUserPathway).Result;
-                            return _mapper.Map<UserPathway>(result);
-                        }
-                        else
-                        {
-                            return "Model is Invalid";
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        return e.Message;
-                    }
-                });
+            ////            if (id > 0)
+            ////            {
+            ////                var originalUserPathway = _userPathwayService.GetNoTrackingAsync(id).Result;
+            ////                userPathway.ApplyPatchTo(ref originalUserPathway);
+            ////                var result = _userPathwayService.UpdateAsync(originalUserPathway).Result;
+            ////                return _mapper.Map<UserPathway>(result);
+            ////            }
+            ////            else
+            ////            {
+            ////                return "Model is Invalid";
+            ////            }
+            ////        }
+            ////        catch (Exception e)
+            ////        {
+            ////            return e.Message;
+            ////        }
+            ////    });
         }
     }
 }
