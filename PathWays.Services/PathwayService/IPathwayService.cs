@@ -9,5 +9,7 @@ namespace PathWays.Services.PathwayService
     public interface IPathwayService
     {
         Task<Pathway> CreateAsync(Pathway pathway);
+
+        Task<bool> IsDomainExists(int domainId);
     }
 }
