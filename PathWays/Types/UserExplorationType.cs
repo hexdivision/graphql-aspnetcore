@@ -48,6 +48,8 @@ namespace PathWays.Types
             Field<IntGraphType>("DomainId");
             Field<IntGraphType>("OrganizationId");
             Field<DateGraphType>("ExplorationCompletionDate");
+            Field<StringGraphType>("AccessCode");
+            Field<BooleanGraphType>("AcceptedTerms");
         }
     }
 }

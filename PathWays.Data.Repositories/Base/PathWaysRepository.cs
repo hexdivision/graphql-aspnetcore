@@ -62,6 +62,7 @@ namespace PathWays.Data.Repositories.Base
 
         public void Attach(T obj)
         {
+            DbSet.Local.Remove(obj);
             DbSet.Attach(obj);
             Context.Entry(obj).State = EntityState.Modified;
         }

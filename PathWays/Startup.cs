@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PathWays.Data.Model;
+using PathWays.Data.Repositories.Domain;
+using PathWays.Data.Repositories.Pathway;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
@@ -167,6 +169,8 @@ namespace PathWays
             services.AddScoped<IReportItemRepository, ReportItemRepository>();
             services.AddScoped<IUserPathwayRepository, UserPathwayRepository>();
             services.AddScoped<IUserStepRepository, UserStepRepository>();
+            services.AddScoped<PathwayRepository, PathwayRepository>();
+            services.AddScoped<IDomainRepository, DomainRepository>();
 
             services.AddScoped<UserType>();
             services.AddScoped<UserInputType>();
