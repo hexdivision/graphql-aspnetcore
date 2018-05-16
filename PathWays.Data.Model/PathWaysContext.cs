@@ -168,7 +168,7 @@ namespace PathWays.Data.Model
                 .HasOne(d => d.Question)
                 .WithMany(d => d.UserSteps)
                 .HasForeignKey(ds => ds.QuestionId)
-                .HasPrincipalKey(d => d.PathwayId)
+                .HasPrincipalKey(d => d.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

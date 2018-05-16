@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180516073013_ModifyPathwayQuestionRelation")]
+    partial class ModifyPathwayQuestionRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
