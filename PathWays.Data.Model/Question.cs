@@ -29,9 +29,15 @@ namespace PathWays.Data.Model
 
         public int? QuestionType { get; set; }
 
+        public int? DeadEnds { get; set; }
+
+        public bool? EnableChat { get; set; }
+
         [DefaultValue(0)]
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<Answer> Answers { get; set; }
+
+        public virtual ICollection<UserStep> UserSteps { get; set; }
     }
 }

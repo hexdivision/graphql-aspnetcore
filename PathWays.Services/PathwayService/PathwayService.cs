@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,6 +72,12 @@ namespace PathWays.Services.PathwayService
             }
 
             return null;
+        }
+        
+        public async Task<bool> IsDomainExists(int domainId)
+        {
+            var domain = await _unitOfWork.DomainRepository.GetByIdAsync(domainId);
+            return domain != null;
         }
     }
 }

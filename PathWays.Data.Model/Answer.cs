@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PathWays.Data.Model.Base;
 
@@ -33,7 +34,11 @@ namespace PathWays.Data.Model
 
         public int? NextItemId { get; set; }
 
+        public int? MaxNodesAhead { get; set; }
+
         [DefaultValue(0)]
         public bool IsDeleted { get; set; }
+
+        public virtual ICollection<UserStep> UserSteps { get; set; }
     }
 }

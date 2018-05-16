@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - 8080:80
     links:
       - pathways_db
     depends_on:
@@ -18,18 +18,30 @@ services:
       - pathwaysnetwork
 
   pathways_db:
-    image: microsoft/mssql-server-linux:2017-latest
+    image: postgres:alpine
     hostname: pathways_db
-    environment:
-      ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: '!234Qwer'
-      MSSQL_PID: Developer
     ports:
-      - 1433:1433
-    volumes:
-      - server-data:/var/opt/mssql
+        - 5432:5432
+    environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "postgres"
+        POSTGRES_DB: "pathways"
     networks:
       - pathwaysnetwork
+
+#  pathways_db:
+#    image: microsoft/mssql-server-linux:2017-latest
+#    hostname: pathways_db
+#    environment:
+#      ACCEPT_EULA: Y
+#      MSSQL_SA_PASSWORD: '!234Qwer'
+#      MSSQL_PID: Developer
+#    ports:
+#      - 1433:1433
+#    volumes:
+#      - server-data:/var/opt/mssql
+#    networks:
+#      - pathwaysnetwork
 
 volumes:
   server-data:

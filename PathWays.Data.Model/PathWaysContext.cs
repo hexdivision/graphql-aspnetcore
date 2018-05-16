@@ -57,6 +57,10 @@ namespace PathWays.Data.Model
 
         public virtual DbSet<ReportItem> ReportItems { get; set; }
 
+        public virtual DbSet<UserPathway> UserPathways { get; set; }
+
+        public virtual DbSet<UserStep> UserSteps { get; set; }
+
         #endregion
 
         #region Fluent API
@@ -71,6 +75,7 @@ namespace PathWays.Data.Model
         {
             ApplyDomainRelations(modelBuilder);
             ApplyPathwayRelations(modelBuilder);
+            ApplyUserPathwayRelations(modelBuilder);
             ApplyQuestionRelations(modelBuilder);
             ApplyAnswerRelations(modelBuilder);
             ApplyInlineResourceRelations(modelBuilder);
@@ -95,6 +100,9 @@ namespace PathWays.Data.Model
         private void AddDefaultValues(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SystemUserRole>().Property(r => r.SessionDuration).HasDefaultValue(900);
+
+            modelBuilder.Entity<Question>().Property(r => r.IsDeleted).HasDefaultValue(0);
+            modelBuilder.Entity<Answer>().Property(r => r.IsDeleted).HasDefaultValue(0);
 
             ////modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
             ////modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
@@ -133,6 +141,16 @@ namespace PathWays.Data.Model
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
+        private void ApplyUserPathwayRelations(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.UserPathway)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.UserPathwayId)
+                .HasPrincipalKey(d => d.UserPathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
         private void ApplyQuestionRelations(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Question>()
@@ -147,6 +165,13 @@ namespace PathWays.Data.Model
                 .WithMany(d => d.Questions)
                 .HasForeignKey(ds => ds.PathwayId)
                 .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.Question)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.QuestionId)
+                .HasPrincipalKey(d => d.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
@@ -164,6 +189,13 @@ namespace PathWays.Data.Model
                 .WithMany(d => d.Answers)
                 .HasForeignKey(ds => ds.PathwayToCreate)
                 .HasPrincipalKey(d => d.PathwayId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserStep>()
+                .HasOne(d => d.Answer)
+                .WithMany(d => d.UserSteps)
+                .HasForeignKey(ds => ds.AnswerId)
+                .HasPrincipalKey(d => d.AnswerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
@@ -248,6 +280,7 @@ namespace PathWays.Data.Model
                 }
             }
         }
+
         #endregion
     }
 }

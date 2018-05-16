@@ -21,11 +21,7 @@ namespace PathWays.Data.Model
 
         public int? SystemUserId { get; set; }
 
-        public Guid? SystemUserGuid { get; set; }
-
         [Required]
         public int RoleId { get; set; }
-
-        public int? ParticipantId { get; set; }
     }
 }

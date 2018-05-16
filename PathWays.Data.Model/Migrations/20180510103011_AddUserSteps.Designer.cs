@@ -11,14 +11,15 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180510103011_AddUserSteps")]
+    partial class AddUserSteps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("PathWays.Data.Model.AccessCodeExcludeWord", b =>
                 {
@@ -52,11 +53,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
-
-                    b.Property<int?>("MaxNodesAhead");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -351,24 +348,19 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int?>("DeadEnds");
-
                     b.Property<string>("DisplayId")
                         .HasMaxLength(20);
 
                     b.Property<int>("DomainId");
 
-                    b.Property<bool?>("EnableChat");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int?>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedDate");
 
-                    b.Property<int?>("PathwayId");
+                    b.Property<int?>("PathwayId")
+                        .IsRequired();
 
                     b.Property<string>("QuestionTitle")
                         .HasMaxLength(255);
@@ -381,8 +373,6 @@ namespace PathWays.Data.Model.Migrations
                     b.HasKey("QuestionId");
 
                     b.HasIndex("DomainId");
-
-                    b.HasIndex("PathwayId");
 
                     b.ToTable("Questions");
                 });
@@ -594,7 +584,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime?>("PathwayCompletionDate");
 
-                    b.Property<int>("PathwayId");
+                    b.Property<int?>("PathwayId");
 
                     b.Property<int?>("PathwayStatus");
 
@@ -715,7 +705,11 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("IssuedOn");
 
+                    b.Property<int?>("ParticipantId");
+
                     b.Property<int>("RoleId");
+
+                    b.Property<Guid?>("SystemUserGuid");
 
                     b.Property<int?>("SystemUserId");
 
@@ -826,8 +820,7 @@ namespace PathWays.Data.Model.Migrations
                 {
                     b.HasOne("PathWays.Data.Model.Pathway", "Pathway")
                         .WithMany("UserPathways")
-                        .HasForeignKey("PathwayId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PathwayId");
 
                     b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")
                         .WithMany("UserPathways")
@@ -857,6 +850,7 @@ namespace PathWays.Data.Model.Migrations
                     b.HasOne("PathWays.Data.Model.Question", "Question")
                         .WithMany("UserSteps")
                         .HasForeignKey("QuestionId")
+                        .HasPrincipalKey("PathwayId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PathWays.Data.Model.UserExploration", "UserExploration")

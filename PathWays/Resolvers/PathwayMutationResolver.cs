@@ -36,6 +36,13 @@ namespace PathWays.Resolvers
                     {
                         var pathway = context.GetArgument<Pathway>("pathway");
 
+                        var isDomainExists = _pathwayService.IsDomainExists(pathway.DomainId).Result;
+
+                        if (!isDomainExists)
+                        {
+                            return "Domain with specified Id not exists";
+                        }
+
                         var result = _pathwayService.CreateAsync(pathway).Result;
                         return _mapper.Map<Pathway>(result);
                     }

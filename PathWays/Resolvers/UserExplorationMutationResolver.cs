@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
 using GraphQL.Types;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PathWays.Common.Utilities;
@@ -32,7 +35,7 @@ namespace PathWays.Resolvers
         {
             graphQLMutation.Field<UserExplorationType>(
                 "createUserExploration",
-                arguments:
+                    arguments:
                 new QueryArguments(
                     new QueryArgument<NonNullGraphType<UserExplorationInputType>> { Name = "userExploration" }),
                 resolve: context =>
@@ -74,15 +77,38 @@ namespace PathWays.Resolvers
                 {
                     try
                     {
-                        var userExploration = context.GetArgument<UserExploration>("userExploration");
-                        var id = userExploration.UserExplorationId;
+                        var id = 0;
+                        var requestPatch = new JsonPatchDocument<UserExploration>();
+
+                        foreach (var item in context.GetArgumentDictionary("userExploration"))
+                        {
+                            if (item.Key != "userExplorationId")
+                            {
+                                requestPatch.Operations.Add(new Microsoft.AspNetCore.JsonPatch.Operations.Operation<UserExploration>
+                                {
+                                    op = "replace",
+                                    path = "/" + item.Key,
+                                    value = item.Value
+                                });
+                            }
+                            else
+                            {
+                                id = int.Parse(item.Value.ToString());
+                            }
+                        }
 
                         if (id > 0)
                         {
                             var originalUserExploration = _userExplorationService.GetNoTrackingUserExploration(id).Result;
-                            userExploration.ApplyPatchTo(ref originalUserExploration);
+                            if (originalUserExploration == null)
+                            {
+                                return "Exploration Not Found";
+                            }
+
+                            requestPatch.ApplyTo(originalUserExploration);
+
                             var result = _userExplorationService.UpdateUserExploration(originalUserExploration).Result;
-                            return _mapper.Map<UserExploration>(result);
+                            return Task.FromResult(_mapper.Map<UserExploration>(result));
                         }
                         else
                         {
@@ -134,16 +160,16 @@ namespace PathWays.Resolvers
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, "Role3"),
-            };
+               {
+                    new Claim(ClaimTypes.NameIdentifier, "Role3"),
+               };
 
             var token = new JwtSecurityToken(
-                jwtIssuer,
-                jwtIssuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                 jwtIssuer,
+                 jwtIssuer,
+                 claims,
+                 expires: DateTime.Now.AddMinutes(30),
+                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

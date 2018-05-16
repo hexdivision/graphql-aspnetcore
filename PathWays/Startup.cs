@@ -3,28 +3,28 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using GraphQl.AspNetCore;
-using GraphQL.Authorization;
 using GraphQL.Authorization.Extension;
 using GraphQL.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PathWays.Data.Model;
+using PathWays.Data.Repositories.Domain;
+using PathWays.Data.Repositories.Pathway;
 using PathWays.Data.Repositories.SystemSettings;
 using PathWays.Data.Repositories.UnitOfWork;
 using PathWays.Data.Repositories.User;
 using PathWays.Data.Repositories.UserExploration;
 using PathWays.Data.Repositories.UserExplorationToken;
+using PathWays.Data.Repositories.UserPathway;
 using PathWays.Data.Repositories.UserReport;
+using PathWays.Data.Repositories.UserStep;
 using PathWays.GraphQL;
 using PathWays.Resolvers;
 using PathWays.Services.PathwayService;
@@ -32,7 +32,9 @@ using PathWays.Services.ReportItem;
 using PathWays.Services.SystemSettingsService;
 using PathWays.Services.TokenService;
 using PathWays.Services.UserExplorationService;
+using PathWays.Services.UserPathwayService;
 using PathWays.Services.UserReportService;
+using PathWays.Services.UserStepService;
 using PathWays.Types;
 using PathWays.UserResolverService;
 
@@ -40,11 +42,19 @@ namespace PathWays
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        private readonly ILogger _logger;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
 
             HostingEnvironment = hostingEnvironment;
+
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            _logger = loggerFactory.CreateLogger("pathways");
+
+            _logger.LogInformation("Env name {0}", HostingEnvironment.EnvironmentName);
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(HostingEnvironment.ContentRootPath)
@@ -124,6 +134,9 @@ namespace PathWays
 
             // Postgres
             var connectionString = Configuration.GetConnectionString("DbConnection");
+
+            _logger.LogInformation("DB connection string {0}", connectionString);
+
             services.AddEntityFrameworkNpgsql().AddDbContext<PathWaysContext>(c => c.UseNpgsql(connectionString), ServiceLifetime.Scoped);
 
             // MSSQL
@@ -141,6 +154,10 @@ namespace PathWays
             services.AddScoped<UserReportMutationResolver>();
             services.AddScoped<ReportItemQueryResolver>();
             services.AddScoped<ReportItemMutationResolver>();
+            services.AddScoped<UserPathwayQueryResolver>();
+            services.AddScoped<UserPathwayMutationResolver>();
+            services.AddScoped<UserStepQueryResolver>();
+            services.AddScoped<UserStepMutationResolver>();
             services.AddScoped<PathwayQueryResolver>();
             services.AddScoped<PathwayMutationResolver>();
 
@@ -151,6 +168,8 @@ namespace PathWays
             services.AddSingleton<ITokenService, TokenService>();
             services.AddSingleton<IUserReportService, UserReportService>();
             services.AddSingleton<IReportItemService, ReportItemService>();
+            services.AddSingleton<IUserPathwayService, UserPathwayService>();
+            services.AddSingleton<IUserStepService, UserStepService>();
             services.AddSingleton<IPathwayService, PathwayService>();
 
             services.AddScoped<ISystemUserRepository, SystemUserRepository>();
@@ -159,6 +178,10 @@ namespace PathWays
             services.AddScoped<IUserExplorationTokenRepository, UserExplorationTokenRepository>();
             services.AddScoped<IUserReportRepository, UserReportRepository>();
             services.AddScoped<IReportItemRepository, ReportItemRepository>();
+            services.AddScoped<IUserPathwayRepository, UserPathwayRepository>();
+            services.AddScoped<IUserStepRepository, UserStepRepository>();
+            services.AddScoped<PathwayRepository, PathwayRepository>();
+            services.AddScoped<IDomainRepository, DomainRepository>();
 
             services.AddScoped<UserType>();
             services.AddScoped<UserInputType>();
@@ -177,6 +200,14 @@ namespace PathWays
             services.AddScoped<ReportItemInputType>();
             services.AddScoped<ReportItemUpdateType>();
 
+            services.AddScoped<UserPathwayType>();
+            services.AddScoped<UserPathwayInputType>();
+            services.AddScoped<UserPathwayUpdateType>();
+
+            services.AddScoped<UserStepType>();
+            services.AddScoped<UserStepInputType>();
+            ////services.AddScoped<UserStepUpdateType>();
+
             services.AddScoped<PathwayType>();
             services.AddScoped<PathwayInputType>();
             services.AddScoped<PathwayUpdateType>();
@@ -188,11 +219,8 @@ namespace PathWays
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PathWaysContext>();
