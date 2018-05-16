@@ -52,6 +52,7 @@ namespace PathWays.Resolvers
                     }
                 });
 
+/*
             graphQLMutation.Field<PathwayType>(
                 "updatePathway",
                 arguments:
@@ -67,7 +68,7 @@ namespace PathWays.Resolvers
                         if (id > 0)
                         {
                             var originalPathway = _pathwayService.GetNoTrackingPathway(id).Result;
-                            pathway.ApplyPatchTo(ref originalPathway);
+                            //// pathway.ApplyPatchTo(ref originalPathway);
                             var result = _pathwayService.UpdatePathway(originalPathway).Result;
                             return _mapper.Map<Pathway>(result);
                         }
@@ -81,6 +82,7 @@ namespace PathWays.Resolvers
                         return e.Message;
                     }
                 });
+*/
 
             graphQLMutation.Field<BooleanGraphType>(
                 "deletePathway",

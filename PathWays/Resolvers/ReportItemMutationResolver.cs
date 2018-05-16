@@ -51,7 +51,7 @@ namespace PathWays.Resolvers
                     var result = _reportItemService.DeleteAsync(reportItemId);
                     return result;
                 });
-
+/*
             graphQLMutation.Field<ReportItemType>(
                 "updateReportItem",
                 arguments:
@@ -84,6 +84,7 @@ namespace PathWays.Resolvers
                         return e.Message;
                     }
                 });
+*/
         }
     }
 }

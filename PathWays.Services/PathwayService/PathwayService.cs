@@ -73,7 +73,7 @@ namespace PathWays.Services.PathwayService
 
             return null;
         }
-        
+
         public async Task<bool> IsDomainExists(int domainId)
         {
             var domain = await _unitOfWork.DomainRepository.GetByIdAsync(domainId);
