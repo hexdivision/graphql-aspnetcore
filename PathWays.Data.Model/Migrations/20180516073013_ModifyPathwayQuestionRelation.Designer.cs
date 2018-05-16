@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180516073013_ModifyPathwayQuestionRelation")]
+    partial class ModifyPathwayQuestionRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,11 +53,7 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
-
-                    b.Property<int?>("MaxNodesAhead");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -351,18 +348,12 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int?>("DeadEnds");
-
                     b.Property<string>("DisplayId")
                         .HasMaxLength(20);
 
                     b.Property<int>("DomainId");
 
-                    b.Property<bool?>("EnableChat");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<int?>("ModifiedBy");
 

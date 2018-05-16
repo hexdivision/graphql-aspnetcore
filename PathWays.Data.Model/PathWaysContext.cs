@@ -101,6 +101,9 @@ namespace PathWays.Data.Model
         {
             modelBuilder.Entity<SystemUserRole>().Property(r => r.SessionDuration).HasDefaultValue(900);
 
+            modelBuilder.Entity<Question>().Property(r => r.IsDeleted).HasDefaultValue(0);
+            modelBuilder.Entity<Answer>().Property(r => r.IsDeleted).HasDefaultValue(0);
+
             ////modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
             ////modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
         }
@@ -168,7 +171,7 @@ namespace PathWays.Data.Model
                 .HasOne(d => d.Question)
                 .WithMany(d => d.UserSteps)
                 .HasForeignKey(ds => ds.QuestionId)
-                .HasPrincipalKey(d => d.PathwayId)
+                .HasPrincipalKey(d => d.QuestionId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 

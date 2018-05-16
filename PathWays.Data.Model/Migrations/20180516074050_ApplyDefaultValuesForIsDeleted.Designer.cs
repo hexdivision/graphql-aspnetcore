@@ -11,9 +11,10 @@ using System;
 namespace PathWays.Data.Model.Migrations
 {
     [DbContext(typeof(PathWaysContext))]
-    partial class PathWaysContextModelSnapshot : ModelSnapshot
+    [Migration("20180516074050_ApplyDefaultValuesForIsDeleted")]
+    partial class ApplyDefaultValuesForIsDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,8 +56,6 @@ namespace PathWays.Data.Model.Migrations
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
-
-                    b.Property<int?>("MaxNodesAhead");
 
                     b.Property<int?>("ModifiedBy");
 
@@ -351,14 +350,10 @@ namespace PathWays.Data.Model.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<int?>("DeadEnds");
-
                     b.Property<string>("DisplayId")
                         .HasMaxLength(20);
 
                     b.Property<int>("DomainId");
-
-                    b.Property<bool?>("EnableChat");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()

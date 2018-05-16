@@ -34,6 +34,8 @@ namespace PathWays.Data.Model
 
         public int? NextItemId { get; set; }
 
+        public int? MaxNodesAhead { get; set; }
+
         [DefaultValue(0)]
         public bool IsDeleted { get; set; }
 
