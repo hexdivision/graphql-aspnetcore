@@ -101,6 +101,9 @@ namespace PathWays.Data.Model
         {
             modelBuilder.Entity<SystemUserRole>().Property(r => r.SessionDuration).HasDefaultValue(900);
 
+            modelBuilder.Entity<Question>().Property(r => r.IsDeleted).HasDefaultValue(0);
+            modelBuilder.Entity<Answer>().Property(r => r.IsDeleted).HasDefaultValue(0);
+
             ////modelBuilder.Entity<UserExploration>().Property(r => r.ExplorationStatus).HasDefaultValue(0);
             ////modelBuilder.Entity<UserExploration>().Property(r => r.IsDeleted).HasDefaultValue(0);
         }
