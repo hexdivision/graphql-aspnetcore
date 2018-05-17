@@ -52,17 +52,15 @@
         [OneTimeSetUp]
         public void Setup()
         {
-            if (this.UnitOfWork == null)
-            {
-                var mockUnitOfWork = new Mock<IUnitOfWork>();
 
-                mockUnitOfWork.SetupGet(s => s.DomainRepository).Returns(new DomainRepository(this.Context));
-                mockUnitOfWork.SetupGet(s => s.OrganizationRepository).Returns(new OrganizationRepository(this.Context));
-                mockUnitOfWork.SetupGet(s => s.UserExplorationRepository).Returns(new UserExplorationRepository(this.Context));
-                mockUnitOfWork.SetupGet(s => s.ExcludeWordRepository).Returns(new ExcludeWordRepository(this.Context));
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
 
-                this.UnitOfWork = mockUnitOfWork.Object;
-            }
+            mockUnitOfWork.SetupGet(s => s.DomainRepository).Returns(new DomainRepository(this.Context));
+            mockUnitOfWork.SetupGet(s => s.OrganizationRepository).Returns(new OrganizationRepository(this.Context));
+            mockUnitOfWork.SetupGet(s => s.UserExplorationRepository).Returns(new UserExplorationRepository(this.Context));
+            mockUnitOfWork.SetupGet(s => s.ExcludeWordRepository).Returns(new ExcludeWordRepository(this.Context));
+
+            this.UnitOfWork = mockUnitOfWork.Object;
         }
 
         [Test]
