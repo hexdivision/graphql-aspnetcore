@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using PathWays.Data.Model;
 using PathWays.Data.Repositories.Domain;
 using PathWays.Data.Repositories.ExcludeWord;
+using PathWays.Data.Repositories.Organization;
 using PathWays.Data.Repositories.Pathway;
 using PathWays.Data.Repositories.Role;
 using PathWays.Data.Repositories.SystemSettings;
@@ -31,6 +32,7 @@ namespace PathWays.Data.Repositories.UnitOfWork
         private IReportItemRepository reportItemRepository = null;
         private IPathwayRepository pathwayRepository = null;
         private IDomainRepository domainRepository = null;
+        private IOrganizationRepository organizationRepository = null;
 
         public UnitOfWork(PathWaysContext context)
         {
@@ -58,6 +60,8 @@ namespace PathWays.Data.Repositories.UnitOfWork
         public IPathwayRepository PathwayRepository => pathwayRepository ?? new PathwayRepository(_context);
 
         public IDomainRepository DomainRepository => domainRepository ?? new DomainRepository(_context);
+
+        public IOrganizationRepository OrganizationRepository => organizationRepository ?? new OrganizationRepository(_context);
 
         public async Task<int> Complete()
         {

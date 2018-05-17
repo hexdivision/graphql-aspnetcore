@@ -14,6 +14,10 @@ namespace PathWays.Data.Model
         private IUserResolver _userResolver;
 
         #region Constructor
+        public PathWaysContext(DbContextOptions<PathWaysContext> options)
+            : base(options)
+        {
+        }
 
         public PathWaysContext(DbContextOptions<PathWaysContext> options, IUserResolver userResolver)
             : base(options)

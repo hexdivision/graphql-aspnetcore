@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -51,8 +52,17 @@ namespace PathWays.Data.Repositories.Base
 
         public async Task<T> InsertAsync(T obj)
         {
-            var inserted = await DbSet.AddAsync(obj);
-            return inserted.Entity;
+            try
+            {
+                var inserted = await DbSet.AddAsync(obj);
+                return inserted.Entity;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return null;
         }
 
         public void Update(T obj)
