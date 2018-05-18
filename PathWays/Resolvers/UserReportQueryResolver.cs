@@ -23,7 +23,7 @@ namespace PathWays.Resolvers
         {
             graphQLQuery.Field<UserReportType>(
                 "userReport",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "id", Description = "id of the user report" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id", Description = "id of the user report" }),
                 resolve: context =>
                 {
                     var id = context.GetArgument<int>("id");
