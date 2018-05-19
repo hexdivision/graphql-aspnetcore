@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Execution;
+using GraphQL.Extension;
 using GraphQL.Http;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GraphQl.AspNetCore
 {
@@ -108,6 +111,8 @@ namespace GraphQl.AspNetCore
                     options.UserContext = httpContext;
                 }
 
+                options.Root = httpContext;
+
                 options.ExposeExceptions = _options.ExposeExceptions;
                 options.ValidationRules = _options.ValidationRules;
                 ConfigureDocumentExecutionListeners(options, _executionListeners);
@@ -129,46 +134,93 @@ namespace GraphQl.AspNetCore
 
         private static async Task<GraphQlParameters> GetParametersAsync(HttpRequest request)
         {
-            // http://graphql.org/learn/serving-over-http/#http-methods-headers-and-body
+            GraphQlParameters parameters = null;
 
-            string body = null;
+            // http://graphql.org/learn/serving-over-http/#http-methods-headers-and-body
             if (request.Method == "POST")
             {
-                // Read request body
-                using (var sr = new StreamReader(request.Body))
+                MediaTypeHeaderValue.TryParse(request.ContentType, out MediaTypeHeaderValue contentType);
+
+                switch (contentType.MediaType.Value)
                 {
-                    body = await sr.ReadToEndAsync();
+                    case "application/json":
+                        // Parse request as json
+                        var bodyJson = GetGraphQLParametersFromBody(request.Body);
+                        parameters = JsonConvert.DeserializeObject<GraphQlParameters>(bodyJson);
+                        break;
+
+                    case "application/graphql":
+                        // The whole body is the query
+                        var bodyGraphQL = GetGraphQLParametersFromBody(request.Body);
+                        parameters = new GraphQlParameters { Query = bodyGraphQL };
+                        break;
+                    case "multipart/form-data":
+                        parameters = await GetGraphQLParametersFromMultipartBody(request.Body, contentType);
+                        break;
+                    default:
+                        // Don't parse anything
+                        parameters = new GraphQlParameters();
+                        break;
+                }
+
+                string query = request.Query["query"];
+
+                // Query string "query" overrides a query in the body
+                parameters.Query = query ?? parameters.Query;
+            }
+
+            return parameters;
+        }
+
+        private static string GetGraphQLParametersFromBody(Stream stream)
+        {
+            string body = null;
+            using (var sr = new StreamReader(stream))
+            {
+                body = sr.ReadToEndAsync().Result;
+            }
+
+            return body;
+        }
+
+        private static async Task<GraphQlParameters> GetGraphQLParametersFromMultipartBody(Stream body, MediaTypeHeaderValue contentType)
+        {
+            var graphqlBody = string.Empty;
+
+            var formAccumulator = default(KeyValueAccumulator);
+
+            var boundary = MultipartRequestHelper.GetBoundary(contentType);
+
+            using (var sr = new StreamReader(body))
+            {
+                var reader = new MultipartReader(boundary, sr.BaseStream);
+
+                var section = await reader.ReadNextSectionAsync();
+
+                while (section != null)
+                {
+                    var hasContentDispositionHeader =
+                        ContentDispositionHeaderValue.TryParse(
+                            section.ContentDisposition,
+                            out ContentDispositionHeaderValue contentDisposition);
+
+                    if (hasContentDispositionHeader)
+                    {
+                        if (contentDisposition.IsFormDisposition())
+                        {
+                            formAccumulator = await MultipartRequestHelper.AccumulateForm(formAccumulator, section, contentDisposition);
+                        }
+                    }
+
+                    section = await reader.ReadNextSectionAsync();
                 }
             }
 
-            MediaTypeHeaderValue.TryParse(request.ContentType, out MediaTypeHeaderValue contentType);
+            var formResults = formAccumulator.GetResults();
+            var operations = formResults.GetValueOrDefault("operations");
+            var variables = formResults.GetValueOrDefault("map");
 
-            GraphQlParameters parameters;
-
-            switch (contentType.MediaType)
-            {
-                case "application/json":
-                    // Parse request as json
-                    parameters = JsonConvert.DeserializeObject<GraphQlParameters>(body);
-                    break;
-
-                case "application/graphql":
-                    // The whole body is the query
-                    parameters = new GraphQlParameters { Query = body };
-                    break;
-
-                default:
-                    // Don't parse anything
-                    parameters = new GraphQlParameters();
-                    break;
-            }
-
-            string query = request.Query["query"];
-
-            // Query string "query" overrides a query in the body
-            parameters.Query = query ?? parameters.Query;
-
-            return parameters;
+            return new GraphQlParameters { Query = operations.ToString(), Variables = JObject.Parse(variables.ToString()) };
         }
 
         private static void ConfigureDocumentExecutionListeners(ExecutionOptions options,
