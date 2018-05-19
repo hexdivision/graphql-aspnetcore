@@ -9,15 +9,16 @@
     <Folder Include="wwwroot\" />
     <Folder Include="GraphQL\" />
     <Folder Include="Authorization\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Security.Permissions" Version="4.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
     <ProjectReference Include="..\GraphQL\GraphQL.Authorization\GraphQL.Authorization.csproj" />
     <ProjectReference Include="..\PathWays.Common.Utilities\PathWays.Common.Utilities.csproj" />
     <ProjectReference Include="..\PathWays.UserResolverService\PathWays.UserResolverService.csproj" />
+    <ProjectReference Include="..\GraphQL\GraphQL.Extension\GraphQL.Extension.csproj" />
   </ItemGroup>
   
   <ItemGroup>

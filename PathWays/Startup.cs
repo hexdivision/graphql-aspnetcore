@@ -145,21 +145,31 @@ namespace PathWays
 
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<GraphQLMutation>();
+
             services.AddScoped<TokenQueryResolver>();
+
             services.AddScoped<SystemSettingsQueryResolver>();
             services.AddScoped<SystemSettingsMutationResolver>();
+
             services.AddScoped<UserExplorationQueryResolver>();
             services.AddScoped<UserExplorationMutationResolver>();
+
             services.AddScoped<UserReportQueryResolver>();
             services.AddScoped<UserReportMutationResolver>();
+
             services.AddScoped<ReportItemQueryResolver>();
             services.AddScoped<ReportItemMutationResolver>();
+
             services.AddScoped<UserPathwayQueryResolver>();
             services.AddScoped<UserPathwayMutationResolver>();
+
             services.AddScoped<UserStepQueryResolver>();
             services.AddScoped<UserStepMutationResolver>();
+
             services.AddScoped<PathwayQueryResolver>();
             services.AddScoped<PathwayMutationResolver>();
+
+            services.AddScoped<FileUploadMutationResolver>();
 
             services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
@@ -211,6 +221,9 @@ namespace PathWays
             services.AddScoped<PathwayType>();
             services.AddScoped<PathwayInputType>();
             services.AddScoped<PathwayUpdateType>();
+
+            services.AddScoped<FileUploadType>();
+            services.AddScoped<FileUploadInputType>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserResolver, UserResolver>();

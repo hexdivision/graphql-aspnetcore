@@ -11,5 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphQL.Authorization\GraphQL.Authorization.csproj" />
     <ProjectReference Include="..\GraphQL.Authorization.Extension\GraphQL.Authorization.Extension.csproj" />
+    <ProjectReference Include="..\GraphQL.Extension\GraphQL.Extension.csproj" />
   </ItemGroup>
 </Project>
