@@ -1,7 +1,7 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using GraphQL.Authorization;
 
-namespace GraphQL.Authorization.Extension
+namespace GraphQl.AspNetCore
 {
     public class GraphQLUserContext : IProvideClaimsPrincipal
     {

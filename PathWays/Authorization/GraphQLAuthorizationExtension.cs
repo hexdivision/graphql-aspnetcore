@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Security.Claims;
+using GraphQL.Authorization;
 using GraphQL.Validation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace GraphQL.Authorization.Extension
+namespace PathWays.GraphQL.Authorization
 {
     public static class GraphQLAuthorizationExtension
     {

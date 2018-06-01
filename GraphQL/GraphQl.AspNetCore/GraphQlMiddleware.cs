@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Execution;
-using GraphQL.Extension;
 using GraphQL.Http;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication;

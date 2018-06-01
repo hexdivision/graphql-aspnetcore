@@ -31,10 +31,8 @@
     <ProjectReference Include="..\PathWays.Services\PathWays.Services.csproj" />
     <ProjectReference Include="..\GraphQL\GraphQL.AspNetCore.Graphiql\GraphQL.AspNetCore.Graphiql.csproj" />
     <ProjectReference Include="..\GraphQL\GraphQl.AspNetCore\GraphQl.AspNetCore.csproj" />
-    <ProjectReference Include="..\GraphQL\GraphQL.Authorization\GraphQL.Authorization.csproj" />
     <ProjectReference Include="..\PathWays.Common.Utilities\PathWays.Common.Utilities.csproj" />
     <ProjectReference Include="..\PathWays.UserResolverService\PathWays.UserResolverService.csproj" />
-    <ProjectReference Include="..\GraphQL\GraphQL.Extension\GraphQL.Extension.csproj" />
   </ItemGroup>
   
   <ItemGroup>

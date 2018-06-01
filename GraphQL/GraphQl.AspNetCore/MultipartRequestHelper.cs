@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 
-namespace GraphQL.Extension
+namespace GraphQl.AspNetCore
 {
     public static class MultipartRequestHelper
     {

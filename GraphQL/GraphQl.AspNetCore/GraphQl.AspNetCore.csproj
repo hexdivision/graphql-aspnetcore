@@ -7,10 +7,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.1" />
     <PackageReference Include="GraphQL" Version="2.0.0-alpha-870" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GraphQL.Authorization\GraphQL.Authorization.csproj" />
-    <ProjectReference Include="..\GraphQL.Authorization.Extension\GraphQL.Authorization.Extension.csproj" />
-    <ProjectReference Include="..\GraphQL.Extension\GraphQL.Extension.csproj" />
+    <PackageReference Include="GraphQL.Authorization" Version="1.0.10-alpha-10" />
   </ItemGroup>
 </Project>

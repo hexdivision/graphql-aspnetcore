@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
 
-namespace GraphQL.Extension
+namespace GraphQl.AspNetCore
 {
-    public static class MapperExtentions
+    public static class HttpRequestExtentions
     {
         public async static Task<string> ReadAsString(this HttpRequest request)
         {
